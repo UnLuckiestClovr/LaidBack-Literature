@@ -10,7 +10,7 @@ public class BookItem {
 
     private String name;
     private String author;
-    private String quantity;
+    private String description;
     private String category;
     private String price;
 
@@ -19,7 +19,7 @@ public class BookItem {
         this.id = id;
         this.name = name;
         this.author = author;
-        this.quantity = quantity;
+        this.description = quantity;
         this.category = category;
         this.price = price;
     }
@@ -41,12 +41,12 @@ public class BookItem {
         this.name = name;
     }
 
-    public String getQuantity() {
-        return quantity;
+    public String getDescription() {
+        return description;
     }
 
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCategory() {
@@ -77,7 +77,7 @@ public class BookItem {
     public void printString() {
         System.out.println("Name: " + id
                 + "\nAuthor: " + author
-                + "\nQuantity: " + quantity
+                + "\nDescription: " + description
                 + "\nCategory: " + category
                 + "\nPrice: " + price);
     }

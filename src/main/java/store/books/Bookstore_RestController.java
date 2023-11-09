@@ -1,21 +1,29 @@
 package store.books;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import store.books.Mong_DAL.MongCRUD;
+import store.books.Mong_DAL.BookServicePortal;
 import store.books.Mong_DAL.model.BookItem;
 
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/LB_Literature")
+@RequestMapping("/lb-literature")
 public class Bookstore_RestController {
+
+    @Autowired
+    BookServicePortal bookPortal;
 
     @RequestMapping(path="/print-all", method= RequestMethod.GET)
     public ArrayList<BookItem> getBooks() {
-        MongCRUD.printAllBooks();
+        ArrayList<BookItem> books = (ArrayList<BookItem>) bookPortal.getAllInventory();
+        for (BookItem book : books) {
+            book.printString();
+        }
 
+        return books;
     }
 
 }
