@@ -24,6 +24,7 @@ public class BookItem {
         this.price = price;
     }
 
+    // region Get/Set
     public String getId() {
         return id;
     }
@@ -71,4 +72,7 @@ public class BookItem {
     public void setAuthor(String author) {
         this.author = author;
     }
+    //endregion
+
+
 }

@@ -11,7 +11,7 @@ import store.books.Mong_DAL.repository.BookRepository;
 public class BookstorePortalLaidBackLiteratureApplication{
 
     @Autowired
-    BookRepository bookRepo;
+    public static BookRepository bookRepo;
 
     public static void main(String[] args) {
         SpringApplication.run(BookstorePortalLaidBackLiteratureApplication.class, args);
