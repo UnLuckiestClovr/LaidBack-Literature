@@ -1,11 +1,7 @@
 package store.books.Mong_DAL.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("bookitems")
 public class BookItem {
-    @Id
     private String id;
 
     private String name;

@@ -4,15 +4,13 @@ package store.books.Mong_DAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import store.books.Mong_DAL.model.BookItem;
-import store.books.Mong_DAL.repository.BookRepository;
 
 import java.util.List;
 
 @Service
 public class BookServicePortal {
-    private final BookRepository bookRepository;
 
-    @Autowired
+    /*@Autowired
     public BookServicePortal(BookRepository bRep) {
         this.bookRepository = bRep;
     }
@@ -37,5 +35,5 @@ public class BookServicePortal {
     // For instance:
     public void deleteInventoryById(String id) {
         bookRepository.deleteById(id);
-    }
+    }*/
 }
