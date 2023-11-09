@@ -7,14 +7,14 @@ import store.books.Mong_DAL.model.BookItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface BookRepository  extends MongoRepository<BookItem, String> {
+public interface BookRepository extends MongoRepository<BookItem, String> {
 
-    @Query("{name: '?0'}")
+   /* @Query("{name: '?0'}")
     BookItem findItemByName(String name);
 
     @Query(value="{category: '?0'}", fields="{'name': 1, 'quantity': 1}")
-    List<BookItem> findAll(String category);
+    List<BookItem> findAllByCategory(String category);
 
-    public long count();
+    public long count();*/
 
 }

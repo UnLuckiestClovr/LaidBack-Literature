@@ -24,6 +24,7 @@ public class BookServicePortal {
     }
 
     public List<BookItem> getAllInventory() {
+        System.out.println("getAllInventory()");
         return bookRepository.findAll();
     }
 
