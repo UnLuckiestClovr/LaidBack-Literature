@@ -74,5 +74,11 @@ public class BookItem {
     }
     //endregion
 
-
+    public void printString() {
+        System.out.println("Name: " + id
+                + "\nAuthor: " + author
+                + "\nQuantity: " + quantity
+                + "\nCategory: " + category
+                + "\nPrice: " + price);
+    }
 }

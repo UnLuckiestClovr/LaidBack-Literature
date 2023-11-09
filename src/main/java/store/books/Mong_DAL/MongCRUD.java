@@ -18,7 +18,7 @@ public class MongCRUD {
     public void printAllBooks() {
         List<BookItem> books = bookRepo.findAll();
         for (BookItem book : books) {
-            System.out.println(book);
+            book.printString();
         }
     }
 
