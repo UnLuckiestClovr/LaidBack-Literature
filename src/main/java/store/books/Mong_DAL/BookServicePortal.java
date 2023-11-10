@@ -18,7 +18,7 @@ import java.util.List;
 public class BookServicePortal {
     private static final MongoClient client = MongoClients.create("mongodb+srv://BookUserGENERIC:8ANyF1tBdepoieKX@book.lamoqyr.mongodb.net/?retryWrites=true&w=majority");
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final ArrayList<BookItem> books = initBookArrayFromDTB();
+    private static ArrayList<BookItem> books = initBookArrayFromDTB();
 
     public static ArrayList<BookItem> initBookArrayFromDTB() {
         try {
@@ -52,6 +52,8 @@ public class BookServicePortal {
             coll.insertOne(doc);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            books = initBookArrayFromDTB();
         }
     }
     //endregion
@@ -62,14 +64,48 @@ public class BookServicePortal {
     }
 
     public static  ArrayList<BookItem> findBookCategory(String catSearch) {
-        MongoDatabase db = client.getDatabase("bookstore");
-        MongoCollection<Document> coll = db.getCollection("inventory");
 
         try {
             ArrayList<BookItem> output = new ArrayList<>();
 
             for (BookItem book : books) {
                 if (catSearch.equalsIgnoreCase(book.getCategory())) {
+                    output.add(book);
+                }
+            }
+
+            return output;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public static  ArrayList<BookItem> findBookByTitle(String titleSearch) {
+
+        try {
+            ArrayList<BookItem> output = new ArrayList<>();
+
+            for (BookItem book : books) {
+                if (titleSearch.equalsIgnoreCase(book.getName())) {
+                    output.add(book);
+                }
+            }
+
+            return output;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public static  ArrayList<BookItem> findBookByAuthor(String authorSearch) {
+
+        try {
+            ArrayList<BookItem> output = new ArrayList<>();
+
+            for (BookItem book : books) {
+                if (authorSearch.equalsIgnoreCase(book.getAuthor())) {
                     output.add(book);
                 }
             }
