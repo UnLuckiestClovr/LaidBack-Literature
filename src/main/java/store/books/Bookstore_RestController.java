@@ -21,15 +21,9 @@ public class Bookstore_RestController {
     @Autowired
     BookServicePortal bookPortal;
 
-    @RequestMapping(path="/print-all", method= RequestMethod.GET)
+    @RequestMapping(path="/get-all-books", method= RequestMethod.GET)
     public ArrayList<BookItem> getBooks() {
         return bookPortal.initBookArrayFromDTB();
-        /*ArrayList<BookItem> books = (ArrayList<BookItem>) bookPortal.getAllInventory();
-        for (BookItem book : books) {
-            book.printString();
-        }
-
-        return books;*/
     }
 
 }
