@@ -32,9 +32,7 @@ public class BookServicePortal {
                 System.out.println(doc.toJson());
                 BookItem book = objectMapper.readValue(doc.toJson(), BookItem.class);
                 books.add(book);
-                System.out.println(book.toString());
             }
-
             return books;
         } catch (Exception e) {
             e.printStackTrace();
