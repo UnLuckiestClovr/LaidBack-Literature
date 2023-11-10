@@ -45,6 +45,7 @@ public class BookServicePortal {
         MongoDatabase db = client.getDatabase("bookstore");
         MongoCollection<Document> coll = db.getCollection("inventory");
 
+        System.out.println("JSON: " + jsonString);
         try {
             Document doc = Document.parse(jsonString);
             coll.insertOne(doc);
