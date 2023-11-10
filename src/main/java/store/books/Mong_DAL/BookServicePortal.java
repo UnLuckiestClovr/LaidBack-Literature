@@ -18,13 +18,12 @@ import java.util.List;
 public class BookServicePortal {
     private static final MongoClient client = MongoClients.create("mongodb+srv://BookUserGENERIC:8ANyF1tBdepoieKX@book.lamoqyr.mongodb.net/?retryWrites=true&w=majority");
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ArrayList<BookItem> books = initBookArrayFromDTB();
 
-    public ArrayList<BookItem> initBookArrayFromDTB() {
+    public static ArrayList<BookItem> initBookArrayFromDTB() {
         try {
             MongoDatabase db = client.getDatabase("bookstore");
             MongoCollection<Document> coll = db.getCollection("inventory");
-
-            ArrayList<BookItem> books = new ArrayList<>();
 
             var documents = coll.find();
             for (var doc : documents) {
@@ -32,6 +31,7 @@ public class BookServicePortal {
                 BookItem book = objectMapper.readValue(doc.toJson(), BookItem.class);
                 books.add(book);
             }
+
             return books;
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,7 +41,8 @@ public class BookServicePortal {
 
 
     // region CREATE
-    public void createBookEntry(String jsonString) {
+
+    public static void createBookEntry(String jsonString) {
         MongoDatabase db = client.getDatabase("bookstore");
         MongoCollection<Document> coll = db.getCollection("inventory");
 
@@ -56,7 +57,29 @@ public class BookServicePortal {
     //endregion
 
     // region READ
+    public static ArrayList<BookItem> getAllBooks() {
+        return books;
+    }
 
+    public static  ArrayList<BookItem> findBookCategory(String catSearch) {
+        MongoDatabase db = client.getDatabase("bookstore");
+        MongoCollection<Document> coll = db.getCollection("inventory");
+
+        try {
+            ArrayList<BookItem> output = new ArrayList<>();
+
+            for (BookItem book : books) {
+                if (catSearch.equalsIgnoreCase(book.getCategory())) {
+                    output.add(book);
+                }
+            }
+
+            return output;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
     //endregion
 
 }
