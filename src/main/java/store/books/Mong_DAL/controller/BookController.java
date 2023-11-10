@@ -15,8 +15,10 @@ public class BookController {
 
     @RequestMapping(path = "/get-all-books/add-book", method = RequestMethod.POST)
     public void addBook (@RequestBody String book){
+        bookPortal.createBookEntry(book);
 
     }
+    
 
 
 
