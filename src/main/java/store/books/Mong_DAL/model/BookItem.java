@@ -1,8 +1,12 @@
 package store.books.Mong_DAL.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class BookItem {
-    private String id;
+    @JsonProperty("_id")
+    private int _id;
 
     private String name;
     private String author;
@@ -10,23 +14,15 @@ public class BookItem {
     private String category;
     private String price;
 
-    public BookItem(String id, String name, String author, String quantity, String category, String price) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.author = author;
-        this.description = quantity;
-        this.category = category;
-        this.price = price;
-    }
+    public BookItem() {}
 
     // region Get/Set
-    public String getId() {
-        return id;
+    public int get_Id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_Id(int id) {
+        this._id = id;
     }
 
     public String getName() {
@@ -71,7 +67,7 @@ public class BookItem {
     //endregion
 
     public void printString() {
-        System.out.println("Name: " + id
+        System.out.println("Name: " + name
                 + "\nAuthor: " + author
                 + "\nDescription: " + description
                 + "\nCategory: " + category

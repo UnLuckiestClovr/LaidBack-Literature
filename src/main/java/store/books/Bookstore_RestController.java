@@ -23,16 +23,7 @@ public class Bookstore_RestController {
 
     @RequestMapping(path="/print-all", method= RequestMethod.GET)
     public ArrayList<BookItem> getBooks() {
-        String databaseAddress = "mongodb+srv://BookUserGENERIC:8ANyF1tBdepoieKX@book.lamoqyr.mongodb.net/?retryWrites=true&w=majority";
-        try (MongoClient client = MongoClients.create(databaseAddress)) {
-            MongoDatabase db = client.getDatabase("bookstore");
-            MongoCollection<Document> inventory = db.getCollection("inventory");
-            var yes = inventory.find();
-            for (var yes2 : yes) {
-                System.out.println(yes2.toJson());
-            }
-        }
-        return new ArrayList<>();
+        return bookPortal.initBookArrayFromDTB();
         /*ArrayList<BookItem> books = (ArrayList<BookItem>) bookPortal.getAllInventory();
         for (BookItem book : books) {
             book.printString();
