@@ -39,6 +39,8 @@ public class BookServicePortal {
         }
     }
 
+
+    // region CREATE
     public void createBookEntry(String jsonString) {
         MongoDatabase db = client.getDatabase("bookstore");
         MongoCollection<Document> coll = db.getCollection("inventory");
@@ -50,4 +52,10 @@ public class BookServicePortal {
             e.printStackTrace();
         }
     }
+    //endregion
+
+    // region READ
+
+    //endregion
+
 }
