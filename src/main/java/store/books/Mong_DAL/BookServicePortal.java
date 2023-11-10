@@ -46,7 +46,25 @@ public class BookServicePortal {
         MongoCollection<Document> coll = db.getCollection("inventory");
 
         try {
-            Document doc = Document.parse(jsonString);
+            ArrayList<BookItem> currBooks = initBookArrayFromDTB();
+            int id = 1;
+
+            for (BookItem book : currBooks) {
+                if(book.get_Id() != id) {
+                    break;
+                }
+                else {id++;}
+            }
+
+            BookItem book = objectMapper.readValue(jsonString, BookItem.class);
+
+            Document doc = new Document("_id", id)
+                    .append("name", book.getName())
+                    .append("author", book.getAuthor())
+                    .append("description", book.getDescription())
+                    .append("category", book.getCategory())
+                    .append("price", book.getPrice());
+
             coll.insertOne(doc);
         } catch (Exception e) {
             e.printStackTrace();
