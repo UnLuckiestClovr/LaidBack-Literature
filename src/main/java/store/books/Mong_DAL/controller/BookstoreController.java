@@ -1,6 +1,5 @@
-package store.books;
+package store.books.Mong_DAL.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import store.books.Mong_DAL.BookstoreServicePortal;
 import store.books.Mong_DAL.model.BookstoreItem;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/lb-literature")
-public class Bookstore_RestController {
+public class BookstoreController {
 
     @RequestMapping(path="/get-all-bookstores", method= RequestMethod.GET)
     public ArrayList<BookstoreItem> getBookstores() {
