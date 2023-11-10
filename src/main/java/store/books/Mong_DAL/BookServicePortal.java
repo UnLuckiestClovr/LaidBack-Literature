@@ -16,18 +16,17 @@ import java.util.List;
 
 @Service
 public class BookServicePortal {
-    private static final String databaseAddress = "mongodb+srv://BookUserGENERIC:8ANyF1tBdepoieKX@book.lamoqyr.mongodb.net/?retryWrites=true&w=majority";
-    private static final MongoClient client = MongoClients.create(databaseAddress);
-
+    private static final MongoClient client = MongoClients.create("mongodb+srv://BookUserGENERIC:8ANyF1tBdepoieKX@book.lamoqyr.mongodb.net/?retryWrites=true&w=majority");
     private static final ObjectMapper objectMapper = new ObjectMapper();
+
     public ArrayList<BookItem> initBookArrayFromDTB() {
         try {
             MongoDatabase db = client.getDatabase("bookstore");
-            MongoCollection<Document> inventory = db.getCollection("inventory");
+            MongoCollection<Document> coll = db.getCollection("inventory");
 
             ArrayList<BookItem> books = new ArrayList<>();
 
-            var documents = inventory.find();
+            var documents = coll.find();
             for (var doc : documents) {
                 System.out.println(doc.toJson());
                 BookItem book = objectMapper.readValue(doc.toJson(), BookItem.class);
@@ -42,11 +41,11 @@ public class BookServicePortal {
 
     public void createBookEntry(String jsonString) {
         MongoDatabase db = client.getDatabase("bookstore");
-        MongoCollection<Document> inventory = db.getCollection("inventory");
+        MongoCollection<Document> coll = db.getCollection("inventory");
 
         try {
             Document doc = Document.parse(jsonString);
-            inventory.insertOne(doc);
+            coll.insertOne(doc);
         } catch (Exception e) {
             e.printStackTrace();
         }
