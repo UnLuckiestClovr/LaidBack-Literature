@@ -35,6 +35,7 @@ public class BookController {
 
     @RequestMapping(path="/add-book", method= RequestMethod.POST)
     public void addBook(@RequestBody String bookstore) {
+        System.out.println(bookstore);
         BookServicePortal.createBookEntry(bookstore);
     }
 

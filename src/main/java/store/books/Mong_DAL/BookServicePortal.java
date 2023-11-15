@@ -26,6 +26,8 @@ public class BookServicePortal {
             MongoDatabase db = client.getDatabase("bookstore");
             MongoCollection<Document> coll = db.getCollection("inventory");
 
+            books = new ArrayList<>();
+
             var documents = coll.find();
             for (var doc : documents) {
                 System.out.println(doc.toJson());
@@ -86,7 +88,7 @@ public class BookServicePortal {
             ArrayList<BookItem> output = new ArrayList<>();
 
             for (BookItem book : books) {
-                if (titleSearch.toLowerCase().contains(book.getName().toLowerCase())) {
+                if (book.getName().toLowerCase().contains(titleSearch.toLowerCase())) {
                     output.add(book);
                 }
             }

@@ -26,6 +26,8 @@ public class UserServicePortal {
             MongoDatabase db = client.getDatabase("bookstore");
             MongoCollection<Document> coll = db.getCollection("users");
 
+            users = new ArrayList<>();
+
             var documents = coll.find();
             for (var doc : documents) {
                 System.out.println(doc.toJson());
