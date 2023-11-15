@@ -36,4 +36,9 @@ public class BookController {
         BookServicePortal.createBookEntry(bookstore);
     }
 
+    @RequestMapping(path="/update-book", method=RequestMethod.PATCH)
+    public void updateBook(@RequestBody String json) {
+        BookServicePortal.updateBookEntry(json);
+    }
+
 }
