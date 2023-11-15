@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import store.books.Mong_DAL.BookServicePortal;
 import store.books.Mong_DAL.model.BookItem;
 import store.books.Mong_DAL.model.BookstoreItem;
+import store.books.Mong_DAL.model.UpdateRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @RequestMapping("/lb-literature")
 public class BookController {
 
-    @RequestMapping(path="/get-all-books", method= RequestMethod.GET)
+    @RequestMapping(path="/get-book-all", method= RequestMethod.GET)
     public ArrayList<BookItem> getBooks() {
         return BookServicePortal.getAllBooks();
     }
@@ -30,15 +31,14 @@ public class BookController {
         return BookServicePortal.findBookCategory(search);
     }
 
-
     @RequestMapping(path="/add-book", method= RequestMethod.POST)
     public void addBook(@RequestBody String bookstore) {
         BookServicePortal.createBookEntry(bookstore);
     }
 
     @RequestMapping(path="/update-book", method=RequestMethod.PATCH)
-    public void updateBook(@RequestBody String json) {
-        BookServicePortal.updateBookEntry(json);
+    public void updateBook(@RequestBody UpdateRequest obj) {
+        BookServicePortal.updateBookEntry(obj);
     }
 
 }

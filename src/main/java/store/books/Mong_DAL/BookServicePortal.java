@@ -11,6 +11,7 @@ import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
 import store.books.Mong_DAL.model.BookItem;
+import store.books.Mong_DAL.model.UpdateRequest;
 
 import java.util.ArrayList;
 
@@ -117,19 +118,20 @@ public class BookServicePortal {
     //endregion
 
     //region UPDATE
-    public static void updateBookEntry(String json) {
+    public static void updateBookEntry(UpdateRequest update_obj) {
+        MongoCollection<Document> coll = client.getDatabase("bookstore").getCollection("inventory");
+
         try {
-            MongoCollection<Document> coll = client.getDatabase("bookstore").getCollection("inventory");
-
-
-
-//            for (BookItem book : books) {
-//                if(book.getName().equals(up_Book.getName())) {
-//                    coll.updateOne();
-//                }
-//            }
+            for (BookItem book : books) {
+                if (book.getName().equals(update_obj.getDocName())) {
+                    coll.deleteOne(Filters.eq("name", book.getName()));
+                    coll.insertOne(Document.parse(objectMapper.writeValueAsString(book)));
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            initBookArrayFromDTB();
         }
     }
     //endregion
@@ -141,6 +143,8 @@ public class BookServicePortal {
             coll.deleteOne(Filters.eq("name", name));
         } catch (MongoException e) {
             e.printStackTrace();
+        } finally {
+            initBookArrayFromDTB();
         }
     }
     //endregion
