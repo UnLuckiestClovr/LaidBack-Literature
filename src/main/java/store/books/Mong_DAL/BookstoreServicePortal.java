@@ -2,14 +2,17 @@ package store.books.Mong_DAL;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
 import store.books.Mong_DAL.model.BookItem;
 import store.books.Mong_DAL.model.BookstoreItem;
+import store.books.Mong_DAL.model.UpdateRequest;
 
 import java.util.ArrayList;
 
@@ -118,4 +121,36 @@ public class BookstoreServicePortal {
     }
     //endregion
 
+
+    //region UPDATE
+    public static void updateStoreEntry(UpdateRequest update_obj) {
+        MongoCollection<Document> coll = client.getDatabase("bookstore").getCollection("stores");
+
+        try {
+            for (BookstoreItem store : bookstores) {
+                if (store.getZipcode().equals(update_obj.getDocName())) {
+                    coll.deleteOne(Filters.eq("zipcode", store.getZipcode()));
+                    coll.insertOne(Document.parse(objectMapper.writeValueAsString(store)));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            initBookstoreArrayFromDTB();
+        }
+    }
+    //endregion
+
+    //region DELETE
+    public static void deleteStoreEntry(String zipcode) {
+        try {
+            MongoCollection<Document> coll = client.getDatabase("bookstore").getCollection("stores");
+            coll.deleteOne(Filters.eq("zipcode", zipcode));
+        } catch (MongoException e) {
+            e.printStackTrace();
+        } finally {
+            initBookstoreArrayFromDTB();
+        }
+    }
+    //endregion
 }
