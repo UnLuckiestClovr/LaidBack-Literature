@@ -43,8 +43,7 @@ public class BookServicePortal {
     // region CREATE
 
     public static void createBookEntry(String jsonString) {
-        MongoDatabase db = client.getDatabase("bookstore");
-        MongoCollection<Document> coll = db.getCollection("inventory");
+        MongoCollection<Document> coll = client.getDatabase("bookstore").getCollection("inventory");
 
         System.out.println("JSON: " + jsonString);
         try {
@@ -118,8 +117,20 @@ public class BookServicePortal {
     //endregion
 
     //region UPDATE
-    public static void updateBookEntry() {
+    public static void updateBookEntry(String json) {
+        try {
+            MongoCollection<Document> coll = client.getDatabase("bookstore").getCollection("inventory");
 
+
+
+//            for (BookItem book : books) {
+//                if(book.getName().equals(up_Book.getName())) {
+//                    coll.updateOne();
+//                }
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     //endregion
 
