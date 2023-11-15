@@ -9,6 +9,8 @@ import store.books.Mong_DAL.model.UpdateRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+import static store.books.Mong_DAL.BookServicePortal.deleteBookEntry;
+
 @RestController
 @RequestMapping("/lb-literature")
 public class BookController {
@@ -41,7 +43,7 @@ public class BookController {
         BookServicePortal.updateBookEntry(obj);
     }
 
-   /* @RequestMapping(path= "/delete-book/{search}",method = RequestMethod.DELETE)
-    public void deleteBook(@RequestBody String search){}*/
+    @RequestMapping(path= "/delete-book",method = RequestMethod.DELETE)
+    public void deleteBook(@RequestBody String name){deleteBookEntry(name);}
 
 }
