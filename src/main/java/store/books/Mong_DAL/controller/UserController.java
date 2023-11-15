@@ -9,7 +9,6 @@ import store.books.Mong_DAL.model.User;
 
 import java.util.ArrayList;
 
-import static store.books.Mong_DAL.BookServicePortal.deleteBookEntry;
 import static store.books.Mong_DAL.UserServicePortal.*;
 
 @RestController
