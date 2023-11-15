@@ -7,12 +7,10 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import store.books.Mong_DAL.model.BookItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class BookServicePortal {
