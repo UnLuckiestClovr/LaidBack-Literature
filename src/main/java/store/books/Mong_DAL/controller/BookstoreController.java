@@ -1,7 +1,7 @@
 package store.books.Mong_DAL.controller;
 
 import org.springframework.web.bind.annotation.*;
-import store.books.Mong_DAL.BookstoreServicePortal;
+import store.books.Mong_DAL.business.BookstoreServicePortal;
 import store.books.Mong_DAL.model.BookstoreItem;
 import store.books.Mong_DAL.model.UpdateRequest;
 

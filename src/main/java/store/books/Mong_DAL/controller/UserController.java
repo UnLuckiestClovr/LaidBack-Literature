@@ -1,7 +1,7 @@
 package store.books.Mong_DAL.controller;
 import org.springframework.web.bind.annotation.*;
 
-import store.books.Mong_DAL.UserServicePortal;
+import store.books.Mong_DAL.business.UserServicePortal;
 
 
 import store.books.Mong_DAL.model.UpdateRequest;
@@ -9,7 +9,7 @@ import store.books.Mong_DAL.model.User;
 
 import java.util.ArrayList;
 
-import static store.books.Mong_DAL.UserServicePortal.*;
+import static store.books.Mong_DAL.business.UserServicePortal.*;
 
 @RestController
 @RequestMapping("/lb-literature")

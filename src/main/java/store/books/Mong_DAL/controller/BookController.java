@@ -1,15 +1,12 @@
 package store.books.Mong_DAL.controller;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import store.books.Mong_DAL.BookServicePortal;
+import store.books.Mong_DAL.business.BookServicePortal;
 import store.books.Mong_DAL.model.BookItem;
-import store.books.Mong_DAL.model.BookstoreItem;
 import store.books.Mong_DAL.model.UpdateRequest;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static store.books.Mong_DAL.BookServicePortal.deleteBookEntry;
+import static store.books.Mong_DAL.business.BookServicePortal.deleteBookEntry;
 
 @RestController
 @RequestMapping("/lb-literature")
