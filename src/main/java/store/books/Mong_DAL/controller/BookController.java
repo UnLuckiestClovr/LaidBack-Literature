@@ -41,4 +41,7 @@ public class BookController {
         BookServicePortal.updateBookEntry(json);
     }
 
+   /* @RequestMapping(path= "/delete-book/{search}",method = RequestMethod.DELETE)
+    public void deleteBook(@RequestBody String search){}*/
+
 }
