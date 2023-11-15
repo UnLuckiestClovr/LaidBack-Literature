@@ -28,7 +28,7 @@ public class BookController {
     }
     @RequestMapping(path="/get-book-category/{search}", method= RequestMethod.GET)
     public ArrayList<BookItem> getBookCategory(@PathVariable String search) {
-        return BookServicePortal.findBookCategory(search);
+        return BookServicePortal.findBookByCategory(search);
     }
 
     @RequestMapping(path="/add-book", method= RequestMethod.POST)
