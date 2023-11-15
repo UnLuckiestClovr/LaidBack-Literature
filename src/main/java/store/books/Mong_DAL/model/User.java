@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
     @JsonProperty("_id")
-    private int id;
+    private Object id;
 
     String username;
     String encPS;
@@ -13,11 +13,11 @@ public class User {
     public User() {
     }
 
-    public int getId() {
+    public Object getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Object id) {
         this.id = id;
     }
 

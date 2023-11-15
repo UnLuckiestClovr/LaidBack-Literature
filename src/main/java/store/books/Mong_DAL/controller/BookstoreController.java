@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @RequestMapping("/lb-literature")
 public class BookstoreController {
 
-    @RequestMapping(path="/get-all-bookstores", method= RequestMethod.GET)
+    @RequestMapping(path="/get-bookstore-all", method= RequestMethod.GET)
     public ArrayList<BookstoreItem> getBookstores() {
         return BookstoreServicePortal.getAllBookstores();
     }

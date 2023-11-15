@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class BookServicePortal {
     private static final MongoClient client = MongoClients.create("mongodb+srv://BookUserGENERIC:8ANyF1tBdepoieKX@book.lamoqyr.mongodb.net/?retryWrites=true&w=majority");
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static ArrayList<BookItem> books = initBookArrayFromDTB();
+    private static ArrayList<BookItem> books = new ArrayList<>();
 
     public static ArrayList<BookItem> initBookArrayFromDTB() {
         try {
@@ -86,7 +86,7 @@ public class BookServicePortal {
             ArrayList<BookItem> output = new ArrayList<>();
 
             for (BookItem book : books) {
-                if (titleSearch.equalsIgnoreCase(book.getName())) {
+                if (titleSearch.toLowerCase().contains(book.getName().toLowerCase())) {
                     output.add(book);
                 }
             }

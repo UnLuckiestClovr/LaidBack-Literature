@@ -21,14 +21,12 @@ public class BookstoreServicePortal {
     private static final MongoClient client = MongoClients.create("mongodb+srv://BookUserGENERIC:8ANyF1tBdepoieKX@book.lamoqyr.mongodb.net/?retryWrites=true&w=majority");
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    private static ArrayList<BookstoreItem> bookstores = initBookstoreArrayFromDTB();
+    private static ArrayList<BookstoreItem> bookstores = new ArrayList<>();
 
     public static ArrayList<BookstoreItem> initBookstoreArrayFromDTB() {
         try {
             MongoDatabase db = client.getDatabase("bookstore");
             MongoCollection<Document> coll = db.getCollection("stores");
-
-            ArrayList<BookstoreItem> bookstores = new ArrayList<>();
 
             var documents = coll.find();
             for (var doc : documents) {

@@ -4,61 +4,52 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BookstoreItem {
     @JsonProperty("_id")
-    private int _id = 0;
+    private Object _id;
 
-    private String State;
-    private String City;
-    private String Zipcode;
-    private String Address;
-    private String AdminPassword;
+    private String state;
+    private String city;
+    private String zipcode;
+    private String address;
 
     public BookstoreItem() { }
 
-    public int get_Id() {
+    public Object get_id() {
         return _id;
     }
 
-    public void set_Id(int _id) {
+    public void set_id(Object _id) {
         this._id = _id;
     }
 
     public String getState() {
-        return State;
+        return state;
     }
 
     public void setState(String state) {
-        State = state;
+        this.state = state;
     }
 
     public String getCity() {
-        return City;
+        return city;
     }
 
     public void setCity(String city) {
-        City = city;
+        this.city = city;
     }
 
     public String getZipcode() {
-        return Zipcode;
+        return zipcode;
     }
 
     public void setZipcode(String zipcode) {
-        Zipcode = zipcode;
+        this.zipcode = zipcode;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(String address) {
-        Address = address;
-    }
-
-    public String getAdminPassword() {
-        return AdminPassword;
-    }
-
-    public void setAdminPassword(String adminPassword) {
-        AdminPassword = adminPassword;
+        this.address = address;
     }
 }
