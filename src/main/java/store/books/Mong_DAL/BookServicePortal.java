@@ -62,7 +62,7 @@ public class BookServicePortal {
         return books;
     }
 
-    public static  ArrayList<BookItem> findBookCategory(String catSearch) {
+    public static  ArrayList<BookItem> findBookByCategory(String catSearch) {
 
         try {
             ArrayList<BookItem> output = new ArrayList<>();
