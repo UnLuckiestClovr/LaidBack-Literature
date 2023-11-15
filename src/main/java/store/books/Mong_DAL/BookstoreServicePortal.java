@@ -42,33 +42,17 @@ public class BookstoreServicePortal {
 
 
     // region CREATE
+
     public static void createBookstoreEntry(String jsonString) {
         MongoDatabase db = client.getDatabase("bookstore");
         MongoCollection<Document> coll = db.getCollection("stores");
 
         try {
-            ArrayList<BookstoreItem> currBookstores = initBookstoreArrayFromDTB();
-            int id = 1;
-
-            for (BookstoreItem bookstore : currBookstores) {
-                if(bookstore.get_Id() != id) {
-                    break;
-                }
-                else {id++;}
-            }
-
-            BookstoreItem bookstore = objectMapper.readValue(jsonString, BookstoreItem.class);
-
-            Document doc = new Document("_id", id)
-                    .append("state", bookstore.getState())
-                    .append("city", bookstore.getCity())
-                    .append("zipcode", bookstore.getZipcode())
-                    .append("address", bookstore.getAddress())
-                    .append("admin_password", bookstore.getAdminPassword());
-
-            coll.insertOne(doc);
+            coll.insertOne(Document.parse(jsonString));
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            bookstores = initBookstoreArrayFromDTB();
         }
     }
     //endregion
