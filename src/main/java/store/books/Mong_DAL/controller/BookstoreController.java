@@ -3,6 +3,7 @@ package store.books.Mong_DAL.controller;
 import org.springframework.web.bind.annotation.*;
 import store.books.Mong_DAL.BookstoreServicePortal;
 import store.books.Mong_DAL.model.BookstoreItem;
+import store.books.Mong_DAL.model.UpdateRequest;
 
 import java.util.ArrayList;
 
@@ -32,6 +33,16 @@ public class BookstoreController {
     @RequestMapping(path="/add-bookstore", method= RequestMethod.POST)
     public void addBookstore(@RequestBody String bookstore) {
         BookstoreServicePortal.createBookstoreEntry(bookstore);
+    }
+
+    @RequestMapping(path="/update-bookstore", method= RequestMethod.PATCH)
+    public void updateBookstore(@RequestBody UpdateRequest obj) {
+        BookstoreServicePortal.updateStoreEntry(obj);
+    }
+
+    @RequestMapping(path="/delete-bookstore", method= RequestMethod.DELETE)
+    public void updateBookstore(@RequestBody String zipcode) {
+        BookstoreServicePortal.deleteStoreEntry(zipcode);
     }
 
 }
