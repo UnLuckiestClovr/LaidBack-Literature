@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfigurat
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import store.books.Mong_DAL.BookServicePortal;
+import store.books.Mong_DAL.BookstoreServicePortal;
+import store.books.Mong_DAL.UserServicePortal;
 
 @SpringBootApplication(
         exclude = {
@@ -19,6 +21,9 @@ public class BookstorePortalLaidBackLiteratureApplication{
 
     public static void main(String[] args) {
         SpringApplication.run(BookstorePortalLaidBackLiteratureApplication.class, args);
+        BookServicePortal.initBookArrayFromDTB();
+        BookstoreServicePortal.initBookstoreArrayFromDTB();
+        UserServicePortal.initUserArrayFromDTB();
     }
 
 }

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class BookItem {
     @JsonProperty("_id")
-    private int _id;
+    private Object _id;
 
     private String name;
     private String author;
@@ -17,12 +17,14 @@ public class BookItem {
     public BookItem() {}
 
     // region Get/Set
-    public int get_Id() {
+
+
+    public Object get_id() {
         return _id;
     }
 
-    public void set_Id(int id) {
-        this._id = id;
+    public void set_id(Object _id) {
+        this._id = _id;
     }
 
     public String getName() {

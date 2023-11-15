@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class UserServicePortal {
     private static final MongoClient client = MongoClients.create("mongodb+srv://BookUserGENERIC:8ANyF1tBdepoieKX@book.lamoqyr.mongodb.net/?retryWrites=true&w=majority");
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static ArrayList<User> users = initUserArrayFromDTB();
+    private static ArrayList<User> users = new ArrayList<>();
 
     public static ArrayList<User> initUserArrayFromDTB() {
         try {
