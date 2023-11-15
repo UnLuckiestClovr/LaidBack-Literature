@@ -2,10 +2,12 @@ package store.books.Mong_DAL;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
 import store.books.Mong_DAL.model.BookItem;
@@ -41,13 +43,11 @@ public class BookServicePortal {
     // region CREATE
 
     public static void createBookEntry(String jsonString) {
-        MongoDatabase db = client.getDatabase("bookstore");
-        MongoCollection<Document> coll = db.getCollection("inventory");
+        MongoCollection<Document> coll = client.getDatabase("bookstore").getCollection("inventory");
 
         System.out.println("JSON: " + jsonString);
         try {
-            Document doc = Document.parse(jsonString);
-            coll.insertOne(doc);
+            coll.insertOne(Document.parse(jsonString));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -112,6 +112,35 @@ public class BookServicePortal {
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+    //endregion
+
+    //region UPDATE
+    public static void updateBookEntry(String json) {
+        try {
+            MongoCollection<Document> coll = client.getDatabase("bookstore").getCollection("inventory");
+
+
+
+//            for (BookItem book : books) {
+//                if(book.getName().equals(up_Book.getName())) {
+//                    coll.updateOne();
+//                }
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //endregion
+
+    //region DELETE
+    public static void deleteBookEntry(String name) {
+        try {
+            MongoCollection<Document> coll = client.getDatabase("bookstore").getCollection("inventory");
+            coll.deleteOne(Filters.eq("name", name));
+        } catch (MongoException e) {
+            e.printStackTrace();
         }
     }
     //endregion
