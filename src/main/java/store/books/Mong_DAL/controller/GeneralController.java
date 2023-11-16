@@ -1,0 +1,110 @@
+package store.books.Mong_DAL.controller;
+
+import org.springframework.web.bind.annotation.*;
+import store.books.Mong_DAL.business.BookServicePortal;
+import store.books.Mong_DAL.business.BookstoreServicePortal;
+import store.books.Mong_DAL.business.UserServicePortal;
+import store.books.Mong_DAL.model.BookItem;
+import store.books.Mong_DAL.model.UpdateRequest;
+
+import java.util.ArrayList;
+
+import static store.books.Mong_DAL.business.BookServicePortal.deleteBookEntry;
+
+@RestController
+@RequestMapping("/lb-literature")
+public class GeneralController {
+
+    @RequestMapping(path="/get/{collection}/all", method= RequestMethod.GET)
+    public <T> ArrayList<T> getAllEntries(@PathVariable String collection) {
+        return switch (collection) { // Checks whether we want to get Books, Bookstores, or Users
+
+            case "books" -> (ArrayList<T>) BookServicePortal.getAllBooks();
+            case "bookstores" -> (ArrayList<T>) BookstoreServicePortal.getAllBookstores();
+            case "users" -> (ArrayList<T>) UserServicePortal.getAllUsers();
+
+            default -> new ArrayList<>(); // Throws In Case of Invalid Input
+
+        };
+    }
+
+    @RequestMapping(path="/get/{collection}/{variable}/{search}", method= RequestMethod.GET)
+    public <T> ArrayList<T> getEntryByVariable(@PathVariable String collection, @PathVariable String variable, @PathVariable String search) {
+        return switch (collection) { // Checks whether we want to search for a Book, Bookstore, or User and by what variable we wish to search for them.
+
+            case "books" -> switch (variable) {
+
+                case "author" -> (ArrayList<T>) BookServicePortal.findBookByAuthor(search);
+                case "title" -> (ArrayList<T>) BookServicePortal.findBookByTitle(search);
+                case "category" -> (ArrayList<T>) BookServicePortal.findBookByCategory(search);
+
+                default -> new ArrayList<>(); // Throws In Case of Invalid Input
+
+            };
+
+            case "bookstores" -> switch (variable) {
+
+                case "state" -> (ArrayList<T>) BookstoreServicePortal.findStoreByState(search);
+                case "city" -> (ArrayList<T>) BookstoreServicePortal.findStoreByCity(search);
+                case "zipcode" -> (ArrayList<T>) BookstoreServicePortal.findStoreByZipcode(search);
+
+                default -> new ArrayList<>(); // Throws In Case of Invalid Input
+
+            };
+
+            case "users" -> switch (variable) {
+
+                case "username" -> (ArrayList<T>) UserServicePortal.findUserByUsername(search);
+                case "account-status" -> (ArrayList<T>) UserServicePortal.findUserByAccountStatus(search);
+
+                default -> new ArrayList<>(); // Throws In Case of Invalid Input
+
+            };
+
+            default -> new ArrayList<>(); // Throws In Case of Invalid Input
+
+        };
+    }
+
+    @RequestMapping(path="/add/{collection}", method= RequestMethod.POST)
+    public void addEntry(@RequestBody String obj, @PathVariable String collection) {
+        switch (collection) { // Checks whether we want to add a Book, Bookstore, or User object to our Database
+
+            case "book" -> BookServicePortal.createBookEntry(obj);
+            case "bookstore" -> BookstoreServicePortal.createBookstoreEntry(obj);
+            case "user" -> UserServicePortal.createUserEntry(obj);
+
+            default -> throw new IllegalArgumentException("Invalid Collection"); // Throws In Case of Invalid Input
+
+        }
+    }
+
+    @RequestMapping(path="/update/{collection}", method=RequestMethod.PATCH)
+    public void updateEntry(@RequestBody UpdateRequest obj, @PathVariable String collection) {
+        switch (collection) { // Checks if we want to update a Book, Bookstore, or User Entry.
+
+            case "book" -> BookServicePortal.updateBookEntry(obj);
+            case "bookstore" -> BookstoreServicePortal.updateStoreEntry(obj);
+            case "user" -> UserServicePortal.updateUserEntry(obj);
+
+            default -> throw new IllegalArgumentException("Invalid Collection"); // Throws In Case of Invalid Input
+
+        }
+
+        BookServicePortal.updateBookEntry(obj);
+    }
+
+    @RequestMapping(path= "/delete/{collection}",method = RequestMethod.DELETE)
+    public void deleteBook(@RequestBody String json, @PathVariable String collection){
+        switch (collection) { //Checks Whether we want to Delete a Book, Bookstore, or User.
+
+            case "book" -> BookServicePortal.deleteBookEntry(json);
+            case "bookstore" -> BookstoreServicePortal.deleteStoreEntry(json);
+            case "user" -> UserServicePortal.deleteUserEntry(json);
+
+            default -> throw new IllegalArgumentException("Invalid Collection"); // Throws In Case of Invalid Input
+
+        }
+    }
+
+}
