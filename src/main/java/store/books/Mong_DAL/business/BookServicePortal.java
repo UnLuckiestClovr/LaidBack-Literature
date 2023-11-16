@@ -8,6 +8,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
 import store.books.Mong_DAL.model.BookItem;
@@ -126,6 +127,13 @@ public class BookServicePortal {
         try {
             for (BookItem book : books) {
                 if (book.getName().equals(update_obj.getDocName())) {
+                    UpdateResult updateResult = coll.updateOne(Filters.eq("planetName", update_obj.getDocName()), new Document("$set", new Document(update_obj.getKeyValue(), update_obj.getNewValue())));
+                    if (updateResult.getModifiedCount() > 0) {
+                        System.out.println("Planet updated successfully");
+                    } else {
+                        System.out.println("Planet not found or update failed");
+                    }
+
                     coll.deleteOne(Filters.eq("name", book.getName()));
                     coll.insertOne(Document.parse(objectMapper.writeValueAsString(book)));
                 }
