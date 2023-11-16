@@ -28,41 +28,38 @@ public class GeneralController {
         };
     }
 
-    @RequestMapping(path="/get/{collection}/{variable}/{search}", method= RequestMethod.GET)
-    public <T> ArrayList<T> getEntryByVariable(@PathVariable String collection, @PathVariable String variable, @PathVariable String search) {
-        return switch (collection) { // Checks whether we want to search for a Book, Bookstore, or User and by what variable we wish to search for them.
+    @RequestMapping(path="/get/books/{variable}/{search}", method= RequestMethod.GET)
+    public <T> ArrayList<T> getBookByVariable(@PathVariable String variable, @PathVariable String search) {
+        return switch (variable) { // Checks whether we want to search for a Book, Bookstore, or User and by what variable we wish to search for them
 
-            case "books" -> switch (variable) {
-
-                case "author" -> (ArrayList<T>) BookServicePortal.findBookByAuthor(search);
-                case "title" -> (ArrayList<T>) BookServicePortal.findBookByTitle(search);
-                case "category" -> (ArrayList<T>) BookServicePortal.findBookByCategory(search);
-
-                default -> new ArrayList<>(); // Throws In Case of Invalid Input
-
-            };
-
-            case "bookstores" -> switch (variable) {
-
-                case "state" -> (ArrayList<T>) BookstoreServicePortal.findStoreByState(search);
-                case "city" -> (ArrayList<T>) BookstoreServicePortal.findStoreByCity(search);
-                case "zipcode" -> (ArrayList<T>) BookstoreServicePortal.findStoreByZipcode(search);
-
-                default -> new ArrayList<>(); // Throws In Case of Invalid Input
-
-            };
-
-            case "users" -> switch (variable) {
-
-                case "username" -> (ArrayList<T>) UserServicePortal.findUserByUsername(search);
-                case "account-status" -> (ArrayList<T>) UserServicePortal.findUserByAccountStatus(search);
-
-                default -> new ArrayList<>(); // Throws In Case of Invalid Input
-
-            };
+            case "author" -> (ArrayList<T>) BookServicePortal.findBookByAuthor(search);
+            case "title" -> (ArrayList<T>) BookServicePortal.findBookByTitle(search);
+            case "category" -> (ArrayList<T>) BookServicePortal.findBookByCategory(search);
 
             default -> new ArrayList<>(); // Throws In Case of Invalid Input
+        };
+    }
 
+    @RequestMapping(path="/get/bookstores/{variable}/{search}", method= RequestMethod.GET)
+    public <T> ArrayList<T> getBookstoreByVariable(@PathVariable String variable, @PathVariable String search) {
+        return switch (variable) { // Checks whether we want to search for a Book, Bookstore, or User and by what variable we wish to search for them
+
+            case "state" -> (ArrayList<T>) BookstoreServicePortal.findStoreByState(search);
+            case "city" -> (ArrayList<T>) BookstoreServicePortal.findStoreByCity(search);
+            case "zipcode" -> (ArrayList<T>) BookstoreServicePortal.findStoreByZipcode(search);
+
+            default -> new ArrayList<>(); // Throws In Case of Invalid Input
+        };
+    }
+
+    @RequestMapping(path="/get/users/{variable}/{search}", method= RequestMethod.GET)
+    public <T> ArrayList<T> getUserByVariable(@PathVariable String variable, @PathVariable String search) {
+        return switch (variable) { // Checks whether we want to search for a Book, Bookstore, or User and by what variable we wish to search for them
+
+            case "username" -> (ArrayList<T>) UserServicePortal.findUserByUsername(search);
+            case "account-status" -> (ArrayList<T>) UserServicePortal.findUserByAccountStatus(search);
+
+            default -> new ArrayList<>(); // Throws In Case of Invalid Input
         };
     }
 
@@ -79,6 +76,8 @@ public class GeneralController {
         }
     }
 
+
+
     @RequestMapping(path="/update/{collection}", method=RequestMethod.PATCH)
     public void updateEntry(@RequestBody UpdateRequest obj, @PathVariable String collection) {
         switch (collection) { // Checks if we want to update a Book, Bookstore, or User Entry.
@@ -90,8 +89,6 @@ public class GeneralController {
             default -> throw new IllegalArgumentException("Invalid Collection"); // Throws In Case of Invalid Input
 
         }
-
-        BookServicePortal.updateBookEntry(obj);
     }
 
     @RequestMapping(path= "/delete/{collection}",method = RequestMethod.DELETE)
