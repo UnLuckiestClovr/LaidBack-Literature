@@ -7,6 +7,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
 import store.books.Mong_DAL.model.BookItem;
@@ -108,8 +109,12 @@ public class UserServicePortal {
         try {
             for (User user : users) {
                 if (user.getUsername().equals(update_obj.getDocName())) {
-                    coll.deleteOne(Filters.eq("username", user.getUsername()));
-                    coll.insertOne(Document.parse(objectMapper.writeValueAsString(user)));
+                    UpdateResult updateResult = coll.updateOne(Filters.eq("username", update_obj.getDocName()), new Document("$set", new Document(update_obj.getKeyValue(), update_obj.getNewValue())));
+                    if (updateResult.getModifiedCount() > 0) {
+                        System.out.println("User updated successfully");
+                    } else {
+                        System.out.println("User not found or update failed");
+                    }
                 }
             }
         } catch (Exception e) {

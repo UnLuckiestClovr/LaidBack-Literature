@@ -8,6 +8,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
 import store.books.Mong_DAL.model.BookItem;
@@ -129,8 +130,12 @@ public class BookstoreServicePortal {
         try {
             for (BookstoreItem store : bookstores) {
                 if (store.getZipcode().equals(update_obj.getDocName())) {
-                    coll.deleteOne(Filters.eq("zipcode", store.getZipcode()));
-                    coll.insertOne(Document.parse(objectMapper.writeValueAsString(store)));
+                    UpdateResult updateResult = coll.updateOne(Filters.eq("zipcode", update_obj.getDocName()), new Document("$set", new Document(update_obj.getKeyValue(), update_obj.getNewValue())));
+                    if (updateResult.getModifiedCount() > 0) {
+                        System.out.println("Bookstore updated successfully");
+                    } else {
+                        System.out.println("Book not found or update failed");
+                    }
                 }
             }
         } catch (Exception e) {

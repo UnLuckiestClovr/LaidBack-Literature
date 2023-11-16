@@ -35,6 +35,4 @@ public class UserController {
     @RequestMapping(path= "/delete-user",method = RequestMethod.DELETE)
     public void deleteUser(@RequestBody String username){deleteUserEntry(username);}
 
-
-
 }
