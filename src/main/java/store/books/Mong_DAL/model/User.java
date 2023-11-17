@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User {
     @JsonProperty("_id")
     private Object id;
-    String fullName;
+
+    String userFullName;
     String username;
     String encPS;
     String accountStatus;
@@ -21,6 +22,14 @@ public class User {
         this.id = id;
     }
 
+    public String getUserFullName() {
+        return userFullName;
+    }
+
+    public void setUserFullName(String userFullName) {
+        this.userFullName = userFullName;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -28,10 +37,6 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    public String getFullName() {return fullName;}
-
-    public void setFullName(String fullName) {this.fullName = fullName;}
 
     public String getEncPS() {
         return encPS;

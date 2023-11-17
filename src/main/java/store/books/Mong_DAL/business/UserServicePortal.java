@@ -11,6 +11,7 @@ import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
 import store.books.Mong_DAL.model.BookItem;
+import store.books.Mong_DAL.model.BookstoreItem;
 import store.books.Mong_DAL.model.UpdateRequest;
 import store.books.Mong_DAL.model.User;
 
@@ -51,7 +52,11 @@ public class UserServicePortal {
 
         System.out.println("JSON: " + jsonString);
         try {
-            coll.insertOne(Document.parse(jsonString));
+            User user = objectMapper.readValue(jsonString, User.class);
+
+            user.setId((users.size()+1));
+
+            coll.insertOne(Document.parse(objectMapper.writeValueAsString(user)));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
