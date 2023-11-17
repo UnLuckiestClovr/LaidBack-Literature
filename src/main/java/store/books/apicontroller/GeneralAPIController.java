@@ -1,21 +1,18 @@
-package store.books.Mong_DAL.controller;
+package store.books.apicontroller;
 
 import org.springframework.web.bind.annotation.*;
 import store.books.Mong_DAL.business.BookServicePortal;
 import store.books.Mong_DAL.business.BookstoreServicePortal;
 import store.books.Mong_DAL.business.UserServicePortal;
-import store.books.Mong_DAL.model.BookItem;
 import store.books.Mong_DAL.model.UpdateRequest;
 
 import java.util.ArrayList;
 
-import static store.books.Mong_DAL.business.BookServicePortal.deleteBookEntry;
-
 @RestController
 @RequestMapping("/lb-literature")
-public class GeneralController {
+public class GeneralAPIController {
 
-    @RequestMapping(path="/get/{collection}/all", method= RequestMethod.GET)
+    @RequestMapping(path="/get-all/{collection}", method= RequestMethod.GET)
     public <T> ArrayList<T> getAllEntries(@PathVariable String collection) {
         return switch (collection) { // Checks whether we want to get Books, Bookstores, or Users
 
@@ -75,8 +72,6 @@ public class GeneralController {
 
         }
     }
-
-
 
     @RequestMapping(path="/update/{collection}", method=RequestMethod.PATCH)
     public void updateEntry(@RequestBody UpdateRequest obj, @PathVariable String collection) {
