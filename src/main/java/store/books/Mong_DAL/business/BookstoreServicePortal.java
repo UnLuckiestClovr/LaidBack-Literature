@@ -52,7 +52,11 @@ public class BookstoreServicePortal {
         MongoCollection<Document> coll = db.getCollection("stores");
 
         try {
-            coll.insertOne(Document.parse(jsonString));
+            BookstoreItem bs = objectMapper.readValue(jsonString, BookstoreItem.class);
+
+            bs.set_id((bookstores.size()+1));
+
+            coll.insertOne(Document.parse(objectMapper.writeValueAsString(bs)));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

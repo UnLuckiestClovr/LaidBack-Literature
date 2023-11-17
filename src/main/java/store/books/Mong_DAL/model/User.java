@@ -6,6 +6,7 @@ public class User {
     @JsonProperty("_id")
     private Object id;
 
+    String userFullName;
     String username;
     String encPS;
     String accountStatus;
@@ -19,6 +20,14 @@ public class User {
 
     public void setId(Object id) {
         this.id = id;
+    }
+
+    public String getUserFullName() {
+        return userFullName;
+    }
+
+    public void setUserFullName(String userFullName) {
+        this.userFullName = userFullName;
     }
 
     public String getUsername() {
