@@ -5,8 +5,11 @@ import store.books.Mong_DAL.business.BookServicePortal;
 import store.books.Mong_DAL.business.BookstoreServicePortal;
 import store.books.Mong_DAL.business.UserServicePortal;
 import store.books.Mong_DAL.model.UpdateRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.security.Principal;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/lb-literature")
@@ -97,6 +100,14 @@ public class GeneralAPIController {
             default -> throw new IllegalArgumentException("Invalid Collection"); // Throws In Case of Invalid Input
 
         }
+    }
+
+    //Security
+    @RequestMapping(path="/auth/{username}/{password}/login", method=RequestMethod.GET)
+    public boolean login(@PathVariable String username, @PathVariable String password) {
+        String authUname = "admin-admin_9112997";
+
+        return (username + "-" + password).equals(authUname);
     }
 
 }
