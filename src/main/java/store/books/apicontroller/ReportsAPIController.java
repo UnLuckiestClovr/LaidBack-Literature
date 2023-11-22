@@ -18,22 +18,16 @@ public class ReportsAPIController {
 
     @RequestMapping(path="/search/{type}/{year}/{month}", method = RequestMethod.GET)
     public <E> ArrayList<E> searchForReport(@PathVariable String type, @PathVariable int year, @PathVariable String month) throws IOException {
-        if(year == 0) {
-            return ReportsServicePortal.search(type, month);
-        } else if (month.equals("0")) {
-            return ReportsServicePortal.search(type, year);
-        } else {
-            return ReportsServicePortal.search(type, year, month);
-        }
+        return ReportsServicePortal.search(type, year, month);
     }
 
-    @RequestMapping(path="/update/{type}/{year}/{month}", method=RequestMethod.PATCH)
-    public void updateReport(@RequestBody UpdateRequest obj, @PathVariable String type, @PathVariable int year, @PathVariable String month) {
-        ReportsServicePortal.updateReport(obj, type, year, month);
+    @RequestMapping(path="/update/{type}/{year}/0", method=RequestMethod.PATCH)
+    public <E> ArrayList<E> updateReport(@RequestBody UpdateRequest obj, @PathVariable String type, @PathVariable int year) throws IOException {
+        return ReportsServicePortal.search(type, year);
     }
 
-    @RequestMapping(path= "/delete/{type}/{year}/{month}",method = RequestMethod.DELETE)
-    public void deleteReport(@PathVariable String type, @PathVariable int year, @PathVariable String month){
-        ReportsServicePortal.deleteReport(year, month, type);
+    @RequestMapping(path= "/delete/{type}/0/{month}",method = RequestMethod.DELETE)
+    public <E> ArrayList<E> deleteReport(@PathVariable String type, @PathVariable String month) throws IOException {
+        return ReportsServicePortal.search(type, month);
     }
 }
