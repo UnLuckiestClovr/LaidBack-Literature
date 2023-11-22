@@ -9,32 +9,33 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
-import store.books.Mong_DAL.model.UpdateRequest;
-import store.books.Mong_DAL.model.User;
+import org.springframework.web.bind.annotation.PathVariable;
+import store.books.Mong_DAL.model.*;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 import java.util.ArrayList;
 
 
 public class ReportsServicePortal {
     private static final MongoClient client = MongoClients.create("mongodb+srv://BookUserGENERIC:8ANyF1tBdepoieKX@book.lamoqyr.mongodb.net/?retryWrites=true&w=majority");
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static ArrayList<UpdateRequest> updateRequests = new ArrayList<>();
+    private static final MongoDatabase db = client.getDatabase("monthlyreports");
 
-    public static ArrayList<UpdateRequest> initUserArrayFromDTB() {
+    public static ArrayList<String> initReportsArrayFromDTB(String collSTR) {
         try {
-            MongoDatabase db = client.getDatabase("monthlyreports");
-            MongoCollection<Document> coll = db.getCollection("consumable");
 
-            updateRequests = new ArrayList<>();
+            MongoCollection<Document> coll = db.getCollection(collSTR);
+
+            ArrayList<String> jsonDocs = new ArrayList<>();
 
             var documents = coll.find();
             for (var doc : documents) {
-                System.out.println(doc.toJson());
-                UpdateRequest upReq = objectMapper.readValue(doc.toJson(), UpdateRequest.class);
-                updateRequests.add(upReq);
+                jsonDocs.add(doc.toJson());
             }
 
-            return updateRequests;
+            return jsonDocs;
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -42,53 +43,65 @@ public class ReportsServicePortal {
     }
 
     //g
-    public static void createReport(String jsonString) {
-        MongoCollection<Document> coll = client.getDatabase("monthlyreports").getCollection("consumable");
-
-        System.out.println("JSON: " + jsonString);
+    public static void createReport(String jsonString, String type) {
         try {
-            UpdateRequest request = objectMapper.readValue(jsonString, UpdateRequest.class);
+            MongoCollection<Document> coll = db.getCollection(type);
 
-            request.setKeyValue(String.valueOf((updateRequests.size()+1)));
+            LocalDate currentDate = LocalDate.now();
+            Month month = currentDate.getMonth();
+            int year = currentDate.getYear();
 
-            coll.insertOne(Document.parse(objectMapper.writeValueAsString(request)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            updateRequests = initUserArrayFromDTB();
-        }
-    }
-    public static void updateReport(UpdateRequest update_obj) {
-        MongoCollection<Document> coll = client.getDatabase("monthlyreports").getCollection("consumable ");
-
-        try {
-            for (UpdateRequest request : updateRequests) {
-                if (request.getDocName().equals(update_obj.getDocName())) {
-                    UpdateResult updateResult = coll.updateOne(Filters.eq("username", update_obj.getDocName()), new Document("$set", new Document(update_obj.getKeyValue(), update_obj.getNewValue())));
-                    if (updateResult.getModifiedCount() > 0) {
-                        System.out.println("User updated successfully");
-                    } else {
-                        System.out.println("User not found or update failed");
-                    }
-                }
+            switch (type) {
+                case "consumable":
+                    ConsumableReport cons = objectMapper.readValue(jsonString, ConsumableReport.class);
+                    cons.setMonth(month.toString());
+                    cons.setYear(year);
+                    coll.insertOne(Document.parse(objectMapper.writeValueAsString(cons)));
+                    break;
+                case "customer_visits":
+                    CustVisitsReport custV = objectMapper.readValue(jsonString, CustVisitsReport.class);
+                    custV.setMonth(month.toString());
+                    custV.setYear(year);
+                    coll.insertOne(Document.parse(objectMapper.writeValueAsString(custV)));
+                    break;
+                case "sales":
+                    SalesReport sale = objectMapper.readValue(jsonString, SalesReport.class);
+                    sale.setMonth(month.toString());
+                    sale.setYear(year);
+                    coll.insertOne(Document.parse(objectMapper.writeValueAsString(sale)));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            initUserArrayFromDTB();
+        }
+    }
+
+    public static void updateReport(UpdateRequest update_obj, String type, int year, String month) {
+        MongoCollection<Document> coll = client.getDatabase("monthlyreports").getCollection(type);
+
+        try {
+
+            UpdateResult updateResult = coll.updateOne(Filters.and(Filters.eq("year", year), Filters.eq("month", month)), new Document("$set", new Document(update_obj.getKeyValue(), update_obj.getNewValue())));
+
+            if (updateResult.getModifiedCount() > 0) {
+                System.out.println("Book updated successfully");
+            } else {
+                System.out.println("Book not found or update failed");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     //endregion
 
     //region DELETE
-    public static void deleteReport(String docName) {
+    public static void deleteReport(int year, String month, String type) {
         try {
-            MongoCollection<Document> coll = client.getDatabase("monthlyreports").getCollection("consumable");
-            coll.deleteOne(Filters.eq("docName", docName));
+            MongoCollection<Document> coll = client.getDatabase("monthlyreports").getCollection(type);
+            coll.deleteOne(Filters.and(Filters.eq("year", year), Filters.eq("month", month)));
         } catch (MongoException e) {
             e.printStackTrace();
-        } finally {
-            initUserArrayFromDTB();
         }
     }
     //endregion
