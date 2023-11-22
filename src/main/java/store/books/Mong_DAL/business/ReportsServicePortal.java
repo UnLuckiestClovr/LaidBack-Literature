@@ -1,5 +1,6 @@
 package store.books.Mong_DAL.business;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
@@ -12,6 +13,7 @@ import org.bson.Document;
 import org.springframework.web.bind.annotation.PathVariable;
 import store.books.Mong_DAL.model.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
@@ -42,7 +44,6 @@ public class ReportsServicePortal {
         }
     }
 
-    //g
     public static void createReport(String jsonString, String type) {
         try {
             MongoCollection<Document> coll = db.getCollection(type);
@@ -93,9 +94,7 @@ public class ReportsServicePortal {
             e.printStackTrace();
         }
     }
-    //endregion
 
-    //region DELETE
     public static void deleteReport(int year, String month, String type) {
         try {
             MongoCollection<Document> coll = client.getDatabase("monthlyreports").getCollection(type);
@@ -104,6 +103,91 @@ public class ReportsServicePortal {
             e.printStackTrace();
         }
     }
-    //endregion
 
+    public static <E> ArrayList<E> search(String type, int year, String month) throws IOException {
+        MongoCollection<Document> coll = db.getCollection(type);
+
+        ArrayList<E> docs = new ArrayList<>();
+
+        switch (type) {
+            case "consumable":
+                var consReports = coll.find(Filters.and(Filters.eq("year", year), Filters.eq("month", month)));
+                for (var doc : consReports) {
+                    docs.add((E) objectMapper.readValue(doc.toJson(), ConsumableReport.class));
+                }
+                break;
+            case "customer_visits":
+                var custReports = coll.find(Filters.and(Filters.eq("year", year), Filters.eq("month", month)));
+                for (var doc : custReports) {
+                    docs.add((E) objectMapper.readValue(doc.toJson(), ConsumableReport.class));
+                }
+                break;
+            case "sales":
+                var salesReports = coll.find(Filters.and(Filters.eq("year", year), Filters.eq("month", month)));
+                for (var doc : salesReports) {
+                    docs.add((E) objectMapper.readValue(doc.toJson(), ConsumableReport.class));
+                }
+                break;
+        }
+
+        return docs;
+    }
+
+    public static <E> ArrayList<E> search(String type, String month) throws IOException {
+        MongoCollection<Document> coll = db.getCollection(type);
+
+        ArrayList<E> docs = new ArrayList<>();
+
+        switch (type) {
+            case "consumable":
+                var consReports = coll.find(Filters.eq("month", month));
+                for (var doc : consReports) {
+                    docs.add((E) objectMapper.readValue(doc.toJson(), ConsumableReport.class));
+                }
+                break;
+            case "customer_visits":
+                var custReports = coll.find(Filters.eq("month", month));
+                for (var doc : custReports) {
+                    docs.add((E) objectMapper.readValue(doc.toJson(), ConsumableReport.class));
+                }
+                break;
+            case "sales":
+                var salesReports = coll.find(Filters.eq("month", month));
+                for (var doc : salesReports) {
+                    docs.add((E) objectMapper.readValue(doc.toJson(), ConsumableReport.class));
+                }
+                break;
+        }
+
+        return docs;
+    }
+
+    public static <E> ArrayList<E> search(String type, int year) throws IOException {
+        MongoCollection<Document> coll = db.getCollection(type);
+
+        ArrayList<E> docs = new ArrayList<>();
+
+        switch (type) {
+            case "consumable":
+                var consReports = coll.find(Filters.eq("year", year));
+                for (var doc : consReports) {
+                    docs.add((E) objectMapper.readValue(doc.toJson(), ConsumableReport.class));
+                }
+                break;
+            case "customer_visits":
+                var custReports = coll.find(Filters.eq("year", year));
+                for (var doc : custReports) {
+                    docs.add((E) objectMapper.readValue(doc.toJson(), ConsumableReport.class));
+                }
+                break;
+            case "sales":
+                var salesReports = coll.find(Filters.eq("year", year));
+                for (var doc : salesReports) {
+                    docs.add((E) objectMapper.readValue(doc.toJson(), ConsumableReport.class));
+                }
+                break;
+        }
+
+        return docs;
+    }
 }
