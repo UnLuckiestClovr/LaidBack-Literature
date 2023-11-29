@@ -52,21 +52,33 @@ public class ReportsServicePortal {
             Month month = currentDate.getMonth();
             int year = currentDate.getYear();
 
+
+
             switch (type) {
                 case "consumable":
                     ConsumableReport cons = objectMapper.readValue(jsonString, ConsumableReport.class);
-                    cons.setMonth(month.toString());
-                    cons.setYear(year);
-                    coll.insertOne(Document.parse(objectMapper.writeValueAsString(cons)));
+                    Document doc = coll.find(Filters.and(Filters.eq("year", year), Filters.eq("month", month), Filters.eq("bookTitle", cons.getBookTitle()))).first();
+                    if (doc != null) {
+                        cons.setNumSold((cons.getNumSold() + 1));
+                    } else {
+                        cons.setNumSold(0);
+                        cons.setMonth(month.toString());
+                        cons.setYear(year);
+                        coll.insertOne(Document.parse(objectMapper.writeValueAsString(cons)));
+                    }
                     break;
                 case "customer_visits":
                     CustVisitsReport custV = objectMapper.readValue(jsonString, CustVisitsReport.class);
+                    Document doc = coll.find(Filters.and(Filters.eq("year", year), Filters.eq("month", month), Filters.eq("bookTitle", custV.getCustomerID()))).first();
+
+                    custV.setNumVisits(0);
                     custV.setMonth(month.toString());
                     custV.setYear(year);
                     coll.insertOne(Document.parse(objectMapper.writeValueAsString(custV)));
                     break;
                 case "sales":
                     SalesReport sale = objectMapper.readValue(jsonString, SalesReport.class);
+                    sale.setBookSales(0);
                     sale.setMonth(month.toString());
                     sale.setYear(year);
                     coll.insertOne(Document.parse(objectMapper.writeValueAsString(sale)));
