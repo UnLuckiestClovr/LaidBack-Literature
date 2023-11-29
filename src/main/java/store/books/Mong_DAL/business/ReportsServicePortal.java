@@ -25,19 +25,24 @@ public class ReportsServicePortal {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final MongoDatabase db = client.getDatabase("monthlyreports");
 
-    public static ArrayList<String> initReportsArrayFromDTB(String collSTR) {
+    public static <E> ArrayList<E> initReportsArrayFromDTB(String collSTR) {
         try {
 
             MongoCollection<Document> coll = db.getCollection(collSTR);
 
-            ArrayList<String> jsonDocs = new ArrayList<>();
+            ArrayList<E> docs = new ArrayList<>();
 
             var documents = coll.find();
             for (var doc : documents) {
-                jsonDocs.add(doc.toJson());
+                switch (collSTR) {
+                    case "consumable" -> docs.add((E) objectMapper.readValue(doc.toJson(), ConsumableReport.class));
+                    case "customer_visits" -> docs.add((E) objectMapper.readValue(doc.toJson(), CustVisitsReport.class));
+                    case "sales" -> docs.add((E) objectMapper.readValue(doc.toJson(), SalesReport.class));
+                }
+
             }
 
-            return jsonDocs;
+            return docs;
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();

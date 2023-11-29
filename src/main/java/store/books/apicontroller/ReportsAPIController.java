@@ -12,9 +12,9 @@ import java.util.ArrayList;
 public class ReportsAPIController {
 
     @GetMapping("/get-all-reports")
-    public ArrayList<ArrayList<String>> getAllArrays() {
+    public <E> ArrayList<ArrayList<E>> getAllArrays() {
         try {
-            ArrayList<ArrayList<String>> jsonStrings = new ArrayList<>();
+            ArrayList<ArrayList<E>> jsonStrings = new ArrayList<>();
 
             jsonStrings.add(ReportsServicePortal.initReportsArrayFromDTB("consumable"));
             jsonStrings.add(ReportsServicePortal.initReportsArrayFromDTB("customer_visits"));

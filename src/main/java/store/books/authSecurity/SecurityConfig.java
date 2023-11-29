@@ -20,7 +20,7 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("admin").password(passwordEncoder().encode("admin")).build()); // Admin Credentials :)
+        manager.createUser(User.withUsername("admin").password(passwordEncoder().encode("admin_9112997")).build()); // Admin Credentials :)
         return manager;
     }
 
