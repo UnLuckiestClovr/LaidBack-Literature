@@ -52,14 +52,21 @@ public class ReportsServicePortal {
             Month month = currentDate.getMonth();
             int year = currentDate.getYear();
 
-
+            Document doc;
 
             switch (type) {
                 case "consumable":
                     ConsumableReport cons = objectMapper.readValue(jsonString, ConsumableReport.class);
-                    Document doc = coll.find(Filters.and(Filters.eq("year", year), Filters.eq("month", month), Filters.eq("bookTitle", cons.getBookTitle()))).first();
+                    doc = coll.find(Filters.and(
+                            Filters.eq("year", year),
+                            Filters.eq("month", month),
+                            Filters.eq("bookTitle", cons.getBookTitle()))).first();
                     if (doc != null) {
-                        cons.setNumSold((cons.getNumSold() + 1));
+                        ConsumableReport consumableReport = objectMapper.readValue(jsonString, ConsumableReport.class);
+                        coll.updateOne(Filters.and(
+                                Filters.eq("year", year),
+                                Filters.eq("month", month),
+                                Filters.eq("bookTitle", consumableReport.getBookTitle())), new Document("numSold", (consumableReport.getBookTitle() + 1)));
                     } else {
                         cons.setNumSold(0);
                         cons.setMonth(month.toString());
@@ -67,21 +74,45 @@ public class ReportsServicePortal {
                         coll.insertOne(Document.parse(objectMapper.writeValueAsString(cons)));
                     }
                     break;
+
                 case "customer_visits":
                     CustVisitsReport custV = objectMapper.readValue(jsonString, CustVisitsReport.class);
-                    Document doc = coll.find(Filters.and(Filters.eq("year", year), Filters.eq("month", month), Filters.eq("bookTitle", custV.getCustomerID()))).first();
-
-                    custV.setNumVisits(0);
-                    custV.setMonth(month.toString());
-                    custV.setYear(year);
-                    coll.insertOne(Document.parse(objectMapper.writeValueAsString(custV)));
+                    doc = coll.find(Filters.and(
+                            Filters.eq("year", year),
+                            Filters.eq("month", month),
+                            Filters.eq("customerID", custV.getCustomerID()))).first();
+                    if (doc != null) {
+                        CustVisitsReport custVisitsReport = objectMapper.readValue(doc.toJson(), CustVisitsReport.class);
+                        coll.updateOne(Filters.and(
+                                Filters.eq("year", year),
+                                Filters.eq("month", month),
+                                Filters.eq("customerID", custVisitsReport.getCustomerID())), new Document("numVisits", (custVisitsReport.getNumVisits() + 1)));
+                    } else {
+                        custV.setNumVisits(0);
+                        custV.setMonth(month.toString());
+                        custV.setYear(year);
+                        coll.insertOne(Document.parse(objectMapper.writeValueAsString(custV)));
+                    }
                     break;
+
                 case "sales":
                     SalesReport sale = objectMapper.readValue(jsonString, SalesReport.class);
-                    sale.setBookSales(0);
-                    sale.setMonth(month.toString());
-                    sale.setYear(year);
-                    coll.insertOne(Document.parse(objectMapper.writeValueAsString(sale)));
+                    doc = coll.find(Filters.and(
+                            Filters.eq("year", year),
+                            Filters.eq("month", month),
+                            Filters.eq("bookstoreID", sale.getBookstoreID()))).first();
+                    if (doc != null) {
+                        SalesReport salesReport = objectMapper.readValue(doc.toJson(), SalesReport.class);
+                        coll.updateOne(Filters.and(
+                                Filters.eq("year", year),
+                                Filters.eq("month", month),
+                                Filters.eq("bookstoreID", salesReport.getBookstoreID())), new Document("bookSales", (salesReport.getBookSales() + 1)));
+                    } else {
+                        sale.setBookSales(0);
+                        sale.setMonth(month.toString());
+                        sale.setYear(year);
+                        coll.insertOne(Document.parse(objectMapper.writeValueAsString(sale)));
+                    }
                     break;
             }
         } catch (Exception e) {
