@@ -125,4 +125,21 @@ public class UserServicePortal {
     }
     //endregion
 
+
+    public static boolean findUserLogin(String username, String password) {
+        try {
+            MongoCollection<Document> coll = client.getDatabase("bookstore").getCollection("users");
+            Document doc = coll.find(Filters.and(Filters.eq("username", username), Filters.eq("encodedPassword", password))).first();
+
+            if (doc != null) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

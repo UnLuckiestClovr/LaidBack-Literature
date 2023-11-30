@@ -1,36 +1,45 @@
-let loggedIn = false;
-let authHeaderValue = null;
+// Login Script
 
 function login(username, password) {
-    authHeaderValue = "Basic " + btoa(username + ":" + password)
-
-
     var httpPath = "http://localhost:42070/auth/login/" + username + "/" + password
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", httpPath, true)
-    xmlHttp.send();
-    // ON READY STATE CHANGE ---------------------------------------------------------
+
     xmlHttp.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            loggedIn = JSON.parse(this.responseText).logBool;
+            sessionStorage.setItem("loggedIn", (JSON.parse(this.responseText).logBool));
+            sessionStorage.setItem("authHeaderValue", ("Basic " + btoa(username + ":" + password)))
 
-            localStorage.setItem("loggedIn", loggedIn);
+            showAuthPriv(JSON.parse(this.responseText).adBool);
+        } else {
+
         }
+    }
+
+    xmlHttp.open("GET", httpPath, true)
+    xmlHttp.send();
+}
+
+function anonLoginandLogout() {
+    sessionStorage.setItem("authHeaderValue", "")
+}
+
+function showAuthPriv(bool) {
+    let priv = document.getElementById("adminCRUD")
+    if (bool === true) {
+        priv.style.display = "block";
+    } else {
+        priv.style.display = "none";
     }
 }
 
-function anonLogin() {
-    authHeaderValue = "Basic " + btoa("anonymous:anon_user")
-}
+// ---------------------------------------------------------------------------------------------------------------------
 
-
-//PageChange
+// PageChange Script
 
 function getHTMLPage(pageName) {
     var httpPath = "http://localhost:42070/get-html-state/" + pageName.toLowerCase()
     var xmlHttp = new XMLHttpRequest();
 
-    // ON READY STATE CHANGE ---------------------------------------------------------
     xmlHttp.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             loggedIn = JSON.parse(this.responseText).logBool;
@@ -40,8 +49,11 @@ function getHTMLPage(pageName) {
     xmlHttp.open("GET", httpPath, true)
 
     if(pageName === "admin") {
-        xmlHttp.setRequestHeader("Authorization", authHeaderValue);
+        xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
     }
 
     xmlHttp.send();
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+

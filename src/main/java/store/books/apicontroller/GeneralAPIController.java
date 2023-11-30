@@ -97,12 +97,22 @@ public class GeneralAPIController {
         }
     }
 
-    //Security
+    //Security / Login
     @RequestMapping(path="/auth/{username}/{password}/login", method=RequestMethod.GET)
-    public boolean login(@PathVariable String username, @PathVariable String password) {
-        String authUname = "admin-admin_9112997";
+    public String login(@PathVariable String username, @PathVariable String password) {
+        String adName = "admin-admin_9112997";
 
-        return (username + "-" + password).equals(authUname);
+        boolean adBool = (username + "-" + password).equals(adName);
+
+        boolean logBool = false;
+        if (adBool) { // If adBool is true it sets logBool to true as well.
+            logBool = true;
+        } else {
+            logBool = UserServicePortal.findUserLogin(username, password);
+        }
+
+        return "{ \"logBool\" : " + logBool + ", " +
+                "\"adBool\" : " + adBool + " }";
     }
 
 }

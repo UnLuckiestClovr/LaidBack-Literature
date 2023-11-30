@@ -27,7 +27,7 @@ public class HTMLController {
         return "";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/loginorregister")
     public String getLoginPage() {
         return "";
     }

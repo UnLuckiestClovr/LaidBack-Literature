@@ -34,6 +34,9 @@ public class SecurityConfig {
                         .requestMatchers("/lb-literature/get/bookstores/state/**").permitAll()
                         .requestMatchers("/lb-literature/get/bookstores/city/**").permitAll()
                         .requestMatchers("/lb-literature/get/bookstores/zipcode/**").permitAll()
+                        .requestMatchers("/get-html-state/home").permitAll()
+                        .requestMatchers("/get-html-state/browsebooks").permitAll()
+                        .requestMatchers("/get-html-state/loginorregister").permitAll()
                         .anyRequest().authenticated()) // locks all non/matching paths down
                 .httpBasic(withDefaults()); // Auth Type
 
