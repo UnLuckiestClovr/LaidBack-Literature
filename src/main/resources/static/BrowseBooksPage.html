@@ -7,11 +7,9 @@
 
 
     <script defer>
-        var loggedIn = false;
 
-
-        function renderList(books) {
-            var entry_list = document.getElementById("uList");
+        function renderBookList(books) {
+            const entry_list = document.getElementById("uList");
             entry_list.innerHTML = "";
 
             for (var entry of books) {
@@ -33,11 +31,29 @@
                 if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                     var books = JSON.parse(this.responseText)
                     console.log(books)
-                    renderList(books)
+                    renderBookList(books)
                 }
             }
 
             xmlHttp.open("GET", "http://localhost:42070/lb-literature/get-all/books", true);
+            xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
+            xmlHttp.send();
+        }
+
+        function getSearchBooks() {
+            const searchInput = document.getElementById("searchInput").value.toString();
+            const catInput = document.getElementById("searchCatsBooks").value.toString();
+            var xmlHttp = new XMLHttpRequest();
+
+            xmlHttp.onreadystatechange = function () {
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    var books = JSON.parse(this.responseText)
+                    console.log(books)
+                    renderBookList(books)
+                }
+            }
+
+            xmlHttp.open("GET", ("http://localhost:42070/lb-literature/get/books/" + catInput + "/" + searchInput), true);
             xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
             xmlHttp.send();
         }
@@ -49,55 +65,26 @@
 </head>
 <body>
 
-<script defer>
-
-    function renderBookList(books) {
-        var entry_list = document.getElementById("uList");
-        entry_list.innerHTML = "";
-
-        for (var entry of books) {
-            var entryHtml = '<li>' +
-                '<p>Book Title >> ' + entry.name + '</p>' +
-                '<p>Book Genre >> ' + entry.category + '</p>' +
-                '<p>Book Author >> ' + entry.author + '</p>' +
-                '<p>Book Description >> ' + entry.description + '</p>' +
-                '<p>Book Price >> $' + entry.price + '</p>' +
-                '</li>';
-            entry_list.innerHTML += entryHtml;
-        }
-    }
-
-    function getAllBooks() {
-        var xmlHttp = new XMLHttpRequest();
-
-        xmlHttp.onreadystatechange = function () {
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                var books = JSON.parse(this.responseText)
-                console.log(books)
-                renderList(books)
-            }
-        }
-
-        xmlHttp.open("GET", "http://localhost:42070/lb-literature/get-all/books", true);
-        xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
-        xmlHttp.send();
-    }
-
-
-</script>
-
-<h2>Welcome to Laid Back Literature!</h2>
+<h2>Find the Books that are right for YOU!</h2>
 
 <br/>
 
-<table>
-    <tr>
-        <td><a href="index.html">Home Page</a></td>
-        <td><a href="BrowseBooksPage.html">Browse Books</a></td>
-        <td><a href="LoginPage.html">Login / Logout</a></td>
-    </tr>
-</table>
+<p>Search By:</p>
+<select id="searchCatsBooks">
+    <option value="author">Author</option>
+    <option value="title">Title</option>
+    <option value="category">Genre</option>
+</select>
 
+<br/>
+
+<input type="text" id="searchInput"/>
+<br/>
+<button onclick="getSearchBooks()">Search for Book</button>
+<br/>
+<button onclick="getAllBooks()">View All Books</button>
+
+<br/>
 <br/>
 
 <ul id="uList"></ul>

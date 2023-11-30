@@ -24,7 +24,29 @@ public class HTMLController {
 
     @GetMapping("/browsebooks")
     public String getBrowseBooksPage() {
-        return "";
+        return "<h2>Find the Books that are right for YOU!</h2>\n" +
+                "\n" +
+                "<br/>\n" +
+                "\n" +
+                "<p>Search By:</p>\n" +
+                "<select id=\"searchCatsBooks\">\n" +
+                "    <option value=\"author\">Author</option>\n" +
+                "    <option value=\"title\">Title</option>\n" +
+                "    <option value=\"category\">Genre</option>\n" +
+                "</select>\n" +
+                "\n" +
+                "<br/>\n" +
+                "\n" +
+                "<input type=\"text\" id=\"searchInput\"/>\n" +
+                "<br/>\n" +
+                "<button onclick=\"getSearchBooks()\">Search for Book</button>\n" +
+                "<br/>\n" +
+                "<button onclick=\"getAllBooks()\">View All Books</button>\n" +
+                "\n" +
+                "<br/>\n" +
+                "<br/>\n" +
+                "\n" +
+                "<ul id=\"uList\"></ul>";
     }
 
     @GetMapping("/loginorregister")
