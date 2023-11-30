@@ -5,11 +5,8 @@ import store.books.Mong_DAL.business.BookServicePortal;
 import store.books.Mong_DAL.business.BookstoreServicePortal;
 import store.books.Mong_DAL.business.UserServicePortal;
 import store.books.Mong_DAL.model.UpdateRequest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.security.Principal;
 import java.util.ArrayList;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/lb-literature")

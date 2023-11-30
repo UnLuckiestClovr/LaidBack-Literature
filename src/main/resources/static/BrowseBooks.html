@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Laid Back Literature - Browse Books</title>
+    <link rel="stylesheet", href="./GeneralStyling.css">
+
+
+    <script defer>
+        var loggedIn = false;
+
+
+        function renderList(books) {
+            var entry_list = document.getElementById("uList");
+            entry_list.innerHTML = "";
+
+            for (var entry of books) {
+                var entryHtml = '<li>' +
+                    '<p>Book Title >> ' + entry.name + '</p>' +
+                    '<p>Book Genre >> ' + entry.category + '</p>' +
+                    '<p>Book Author >> ' + entry.author + '</p>' +
+                    '<p>Book Description >> ' + entry.description + '</p>' +
+                    '<p>Book Price >> $' + entry.price + '</p>' +
+                    '</li>';
+                entry_list.innerHTML += entryHtml;
+            }
+        }
+
+        function getAllBooks() {
+            var xmlHttp = new XMLHttpRequest();
+
+            xmlHttp.onreadystatechange = function () {
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    var books = JSON.parse(this.responseText)
+                    console.log(books)
+                    renderList(books)
+                }
+            }
+
+            xmlHttp.open("GET", "http://localhost:42070/lb-literature/get-all/books", true);
+            xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
+            xmlHttp.send();
+        }
+
+
+    </script>
+
+
+</head>
+<body>
+<h2>Welcome to Laid Back Literature!</h2>
+
+<br/>
+
+<table>
+    <tr>
+        <td><a href="Home.html">Home Page</a></td>
+        <td><a href="BrowseBooks.html">Browse Books</a></td>
+        <td><a href="LoginPage.html">Login / Logout</a></td>
+    </tr>
+</table>
+
+<br/>
+
+<ul id="uList"></ul>
+
+
+</body>
+
+<footer>
+    <a id="adminCRUD" href="AD_BOOKS.html">ADMIN INFO</a>
+</footer>
+
+</html>
