@@ -87,24 +87,6 @@ public class UserServicePortal {
             return new ArrayList<>();
         }
     }
-
-    public static  ArrayList<User> findUserByAccountStatus(String asSearch) {
-
-        try {
-            ArrayList<User> output = new ArrayList<>();
-
-            for (User user : users) {
-                if (asSearch.equalsIgnoreCase(user.getAccountStatus())) {
-                    output.add(user);
-                }
-            }
-
-            return output;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
     //endregion
 
     //region UPDATE

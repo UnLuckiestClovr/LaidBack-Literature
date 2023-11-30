@@ -6,10 +6,9 @@ public class User {
     @JsonProperty("_id")
     private Object id;
 
-    String userFullName;
-    String username;
-    String encPS;
-    String accountStatus;
+    private String userFullName;
+    private String username;
+    private String encPS;
 
     public User() {
     }
@@ -44,13 +43,5 @@ public class User {
 
     public void setEncPS(String encPS) {
         this.encPS = encPS;
-    }
-
-    public String getAccountStatus() {
-        return accountStatus;
-    }
-
-    public void setAccountStatus(String accountStatus) {
-        this.accountStatus = accountStatus;
     }
 }

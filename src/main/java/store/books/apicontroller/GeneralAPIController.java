@@ -51,13 +51,11 @@ public class GeneralAPIController {
 
     @RequestMapping(path="/get/users/{variable}/{search}", method= RequestMethod.GET)
     public <T> ArrayList<T> getUserByVariable(@PathVariable String variable, @PathVariable String search) {
-        return switch (variable) { // Checks whether we want to search for a Book, Bookstore, or User and by what variable we wish to search for them
-
-            case "username" -> (ArrayList<T>) UserServicePortal.findUserByUsername(search);
-            case "account-status" -> (ArrayList<T>) UserServicePortal.findUserByAccountStatus(search);
-
-            default -> new ArrayList<>(); // Throws In Case of Invalid Input
-        };
+        if (search.equals("username")) {
+            return (ArrayList<T>) UserServicePortal.findUserByUsername(search);
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     @RequestMapping(path="/add/{collection}", method= RequestMethod.POST)

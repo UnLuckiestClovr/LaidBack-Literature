@@ -32,7 +32,7 @@ public class HTMLController {
         return "";
     }
 
-    @GetMapping("/ADMIN")
+    @GetMapping("/admin")
     public String getAdminPage() {
         return "";
     }
