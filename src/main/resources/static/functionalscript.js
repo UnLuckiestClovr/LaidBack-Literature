@@ -1,4 +1,4 @@
-// Login Script
+// Login Scripts --------------------------------------------------------------------------------------------------------
 
 function login(username, password) {
     var httpPath = "http://localhost:42070/auth/login/" + username + "/" + password
@@ -32,9 +32,8 @@ function showAuthPriv(bool) {
     }
 }
 
-// ---------------------------------------------------------------------------------------------------------------------
 
-// PageChange Script
+// PageChange Scripts ---------------------------------------------------------------------------------------------------
 
 function getHTMLPage(pageName) {
     var httpPath = "http://localhost:42070/get-html-state/" + pageName.toLowerCase()
@@ -58,9 +57,9 @@ function getHTMLPage(pageName) {
     xmlHttp.send();
 }
 
-// ---------------------------------------------------------------------------------------------------------------------
 
-// Browse Books Page
+// Browse Books Scripts ---------------------------------------------------------------------------------------------------
+
 try {
 
     function renderBookList(books) {
@@ -114,3 +113,7 @@ try {
     }
 
 } catch (error) {}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+
