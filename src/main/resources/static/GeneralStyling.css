@@ -89,3 +89,10 @@ select option:checked {
 }
 
 /* End of ID-Based Styling */
+
+
+/* Class Styling */
+
+.subpage {
+    display: none;
+}
