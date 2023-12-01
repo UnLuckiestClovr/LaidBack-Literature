@@ -32,15 +32,48 @@
     </select>
 
     <section class="crudPage" id="booksC">
+        <label>Title</label>
+        <input type="text" id="bookTitleC" placeholder="Book Title"/>
+        <br>
 
+        <label>Author</label>
+        <input type="text" id="bookAuthorC" placeholder="Author"/>
+        <br>
+
+        <label>Category</label>
+        <input type="text" id="bookCategoryC" placeholder="Category"/>
+        <br>
+
+        <button onclick="submitCreateBook()">Submit</button>
     </section>
 
     <section class="crudPage" id="bookstoresC">
+        <!-- state city zip address -->
+        <label>State</label>
+        <input type="text" id="storeStateC" placeholder="State"/>
+        <br>
 
+        <label>City</label>
+        <input type="text" id="storeCityC" placeholder="City"/>
+        <br>
+
+        <label>Zip</label>
+        <input type="text" id="storeZipC" placeholder="Zipcode"/>
+        <br>
+
+        <label>Street Address</label>
+        <input type="text" id="storeAddressC" placeholder="Street Address"/>
+        <br>
+
+        <button onclick="submitCreateStore()">Submit</button>
     </section>
 
     <section class="crudPage" id="reportsC">
+        <label>Report</label>
+        <input type="text" id="reportC" placeholder="Report Text"/>
+        <br>
 
+        <button onclick="submitCreateReport()">Submit</button>
     </section>
 </article>
 
@@ -56,19 +89,74 @@
 
     <section class="crudPage" id="booksR">
 
+        <p>Search By:</p>
+        <select id="searchCatsBooks">
+            <option value="author">Author</option>
+            <option value="title">Title</option>
+            <option value="category">Genre</option>
+        </select>
+
+        <input type="text" id="bookSearchInput"/>
+        <br/>
+        <button onclick="getSearchBooks()">Search for Book</button>
+        <br/>
+        <button onclick="getAllBooks()">View All Books</button>
     </section>
 
     <section class="crudPage" id="bookstoresR">
+        <!-- state city zip address -->
+
+        <p>Search By:</p>
+        <select id="searchCatsStores">
+            <option value="state">State</option>
+            <option value="city">City</option>
+            <option value="zip">Zip</option>
+            <option value="address">Address</option>
+        </select>
+
+        <input type="text" id="storesSearchInput"/>
+        <br/>
+        <button onclick="getSearchStores()">Search for Store</button>
+        <br/>
+        <button onclick="getAllStores()">View All Stores</button>
 
     </section>
 
     <section class="crudPage" id="reportsR">
 
+        <!-- year month -->
+
+        <select id="searchCatsReports">
+            <option value="year">Year</option>
+            <option value="month">Month</option>
+        </select>
+
+        <input type="text" id="reportSearchInput"/>
+        <br/>
+        <button onclick="getSearchReports()">Search for Report</button>
+        <br/>
+        <button onclick="getAllReports()">View All Reports</button>
+
     </section>
 
     <section class="crudPage" id="usersR">
+        <!-- Username, fullname -->
+
+        <select id="searchCatsUsers">
+            <option value="userName">UserName</option>
+            <option value="fullName">FullName</option>
+
+        </select>
+
+        <input type="text" id="usersSearchInput"/>
+        <br/>
+        <button onclick="getSearchUsers()">Search for User</button>
+        <br/>
+        <button onclick="getAllUsers()">View All Users</button>
 
     </section>
+
+    <ul id="uList"></ul>
 
 </article>
 
@@ -78,19 +166,51 @@
     <select id="UpdateSelect" onchange="showCreatePage()">
         <option value="booksU">Books</option>
         <option value="bookstoresU">Bookstores</option>
-        <option value="reportsU">Monthly Reports</option>
     </select>
 
     <section class="crudPage" id="booksU">
+        <label>Original Title</label>
+        <input type="text" id="bookToUpdateTitle" placeholder="Book To Update"/>
+        <br>
 
+        <label>Title</label>
+        <input type="text" id="bookTitleU" placeholder="Book Title"/>
+        <br>
+
+        <label>Author</label>
+        <input type="text" id="bookAuthorU" placeholder="Author"/>
+        <br>
+
+        <label>Category</label>
+        <input type="text" id="bookCategoryU" placeholder="Category"/>
+        <br>
+
+        <button onclick="submitUpdateBook()">Submit</button>
     </section>
 
     <section class="crudPage" id="bookstoresU">
+        <!-- state city zip address -->
+        <label>Original Zip</label>
+        <input type="text" id="storeToUpdateZip" placeholder="Original Store Zipcode"/>
+        <br>
 
-    </section>
+        <label>State</label>
+        <input type="text" id="storeStateU" placeholder="State"/>
+        <br>
 
-    <section class="crudPage" id="reportsU">
+        <label>City</label>
+        <input type="text" id="storeCityU" placeholder="City"/>
+        <br>
 
+        <label>Zip</label>
+        <input type="text" id="storeZipU" placeholder="Zipcode"/>
+        <br>
+
+        <label>Street Address</label>
+        <input type="text" id="storeAddressU" placeholder="Street Address"/>
+        <br>
+
+        <button onclick="submitUpdateStore()">Submit</button>
     </section>
 </article>
 
@@ -106,17 +226,62 @@
 
     <section class="crudPage" id="booksD">
 
+        <p>Search By:</p>
+        <select id="searchCatsBooksD">
+            <option value="author">Author</option>
+            <option value="title">Title</option>
+            <option value="category">Genre</option>
+        </select>
+
+        <input type="text" id="bookSearchInputD"/>
+        <br/>
+        <button onclick="deleteBook()">Delete Book</button>
     </section>
 
     <section class="crudPage" id="bookstoresD">
+        <!-- state city zip address -->
+
+        <p>Search By:</p>
+        <select id="searchCatsStoresD">
+            <option value="state">State</option>
+            <option value="city">City</option>
+            <option value="zip">Zip</option>
+            <option value="address">Address</option>
+        </select>
+
+        <input type="text" id="storesSearchInputD"/>
+        <br/>
+        <button onclick="deleteStore()">Delete Store</button>
 
     </section>
 
     <section class="crudPage" id="reportsD">
 
+        <!-- year month -->
+
+        <select id="searchCatsReportsD">
+            <option value="year">Year</option>
+            <option value="month">Month</option>
+        </select>
+
+        <input type="text" id="reportSearchInputD"/>
+        <br/>
+        <button onclick="deleteReport()">Delete Report</button>
+
     </section>
 
     <section class="crudPage" id="usersD">
+        <!-- Username, fullname -->
+
+        <select id="searchCatsUsersD">
+            <option value="userName">UserName</option>
+            <option value="fullName">FullName</option>
+
+        </select>
+
+        <input type="text" id="usersSearchInputD"/>
+        <br/>
+        <button onclick="deleteUser()">Delete User</button>
 
     </section>
 </article>
