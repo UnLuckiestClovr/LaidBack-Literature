@@ -1,6 +1,10 @@
 body {
     padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-image: url('./images/LaidBackBackground.jpg');
+    background-size: cover; /* Adjust to cover the entire element */
+    background-attachment: fixed;
+    color: #F0EDEE;
 }
 
 a {
@@ -9,4 +13,35 @@ a {
 
 #adminCRUD {
     display: none;
+}
+
+/* List Styling */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+}
+
+table {
+    width:100%;
+    background-color: #07393C;
+    border-collapse: collapse;
+    border-width: 2px;
+    border-color: #2C666E;
+    border-style: solid;
+    color: #FFFFFF;
+    text-align: center;
+    align-content: center;
+    font-size: larger;
+}
+
+#blockContent {
+    background-color: #07393C;
 }

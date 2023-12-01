@@ -1,7 +1,7 @@
 // Login Scripts --------------------------------------------------------------------------------------------------------
 
 function login(username, password) {
-    var httpPath = "http://localhost:42070/auth/login/" + username + "/" + password
+    var httpPath = "/auth/login/" + username + "/" + password
     var xmlHttp = new XMLHttpRequest();
 
     xmlHttp.onreadystatechange = function () {
@@ -35,27 +35,30 @@ function showAuthPriv(bool) {
 
 // PageChange Scripts ---------------------------------------------------------------------------------------------------
 
-function getHTMLPage(pageName) {
-    var httpPath = "http://localhost:42070/get-html-state/" + pageName.toLowerCase()
-    var xmlHttp = new XMLHttpRequest();
+try {
+    function getHTMLPage(pageName) {
+        var httpPath = "/get-html-state/" + pageName.toLowerCase()
+        var xmlHttp = new XMLHttpRequest();
 
-    console.log("Attempting State Change : " , pageName);
+        console.log("Attempting State Change : " , pageName);
 
-    xmlHttp.onreadystatechange = function () {
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            document.getElementById("blockContent").innerHTML = this.responseText;
-        } else {
-            console.log("State Change Failed");
+        xmlHttp.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                document.getElementById("blockContent").innerHTML = this.responseText;
+            }
         }
-    }
-    xmlHttp.open("GET", httpPath, true)
+        xmlHttp.open("GET", httpPath, true)
 
-    if(pageName === "admin") {
-        xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
-    }
+        if(pageName === "admin") {
+            xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
+        }
 
-    xmlHttp.send();
+        xmlHttp.send();
+    }
+} catch (error) {
+    console.log("HTML State Changer not Set up Correctly")
 }
+
 
 
 // Browse Books Scripts ---------------------------------------------------------------------------------------------------
@@ -89,7 +92,7 @@ try {
             }
         }
 
-        xmlHttp.open("GET", "http://localhost:42070/lb-literature/get-all/books", true);
+        xmlHttp.open("GET", "/lb-literature/get-all/books", true);
         xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
         xmlHttp.send();
     }
@@ -107,7 +110,7 @@ try {
             }
         }
 
-        xmlHttp.open("GET", ("http://localhost:42070/lb-literature/get/books/" + catInput + "/" + searchInput), true);
+        xmlHttp.open("GET", ("/lb-literature/get/books/" + catInput + "/" + searchInput), true);
         xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
         xmlHttp.send();
     }

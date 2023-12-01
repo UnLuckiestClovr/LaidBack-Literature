@@ -27,6 +27,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/images/**").permitAll()
+                        .requestMatchers("/GeneralStyling.css").permitAll()
+                        .requestMatchers("/functionalscript.js").permitAll()
+                        .requestMatchers("index.html").permitAll()
                         .requestMatchers("/lb-literature/get-all/**").permitAll()
                         .requestMatchers("/lb-literature/get/books/author/**").permitAll()
                         .requestMatchers("/lb-literature/get/books/title/**").permitAll()
