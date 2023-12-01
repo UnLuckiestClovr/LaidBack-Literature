@@ -27,6 +27,7 @@ ul li {
     align-items: center;
     padding: 15px;
     border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
 }
 
 table {
@@ -34,7 +35,7 @@ table {
     background-color: #07393C;
     border-collapse: collapse;
     border-width: 2px;
-    border-color: #2C666E;
+    border-color: #07393C;
     border-style: solid;
     color: #FFFFFF;
     text-align: center;
@@ -44,4 +45,6 @@ table {
 
 #blockContent {
     background-color: #07393C;
+    border-color: #07393C;
+    border-style: solid;
 }
