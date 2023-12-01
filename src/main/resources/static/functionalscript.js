@@ -140,4 +140,20 @@ try {
         }
     }
 
+    function showCreatePage() {
+        let crudPageID = document.getElementById("CreateSelect").value.toString();
+
+        // Hide all pages
+        const pages = document.querySelectorAll('.crudPage');
+        pages.forEach(page => {
+            page.style.display = 'none';
+        });
+
+        // Show the selected page
+        const selectedPage = document.getElementById(crudPageID);
+        if (selectedPage) {
+            selectedPage.style.display = 'block';
+        }
+    }
+
 } catch (error) {}
