@@ -126,6 +126,18 @@ try {
 
 try {
 
+    function showSubPage(subpageID) {
+        // Hide all pages
+        const pages = document.querySelectorAll('.subpage');
+        pages.forEach(page => {
+            page.style.display = 'none';
+        });
 
+        // Show the selected page
+        const selectedPage = document.getElementById(subpageID);
+        if (selectedPage) {
+            selectedPage.style.display = 'block';
+        }
+    }
 
 } catch (error) {}
