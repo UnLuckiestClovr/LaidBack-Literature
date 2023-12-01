@@ -100,6 +100,8 @@ public class GeneralAPIController {
     //Security / Login
     @RequestMapping(path="/auth/{username}/{password}/login", method=RequestMethod.GET)
     public String login(@PathVariable String username, @PathVariable String password) {
+        System.out.println("Calling Login...");
+
         String adName = "admin-admin_9112997";
 
         boolean adBool = (username + "-" + password).equals(adName);

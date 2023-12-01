@@ -7,29 +7,6 @@ body {
     color: #F0EDEE;
 }
 
-a {
-    color: #00B7FF;
-}
-
-#adminCRUD {
-    display: none;
-}
-
-/* List Styling */
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-ul li {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
-}
-
 table {
     width:100%;
     background-color: #07393C;
@@ -43,8 +20,72 @@ table {
     font-size: larger;
 }
 
+a {
+    color: #00B7FF;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    place-self: center;
+}
+
+
+/* List Styling */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    display: block;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    background-color: #042123;
+}
+
+/* End of List Styling */
+
+/* Select Block Styling */
+
+select {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+    background-color: #fff;
+    color: #333;
+}
+
+select option {
+    background-color: #fff;
+    color: #333;
+}
+
+select option:checked {
+    background-color: #f0f0f0;
+    color: #555;
+}
+
+/* End of Select Styling */
+
+/* ID-Based Styling */
+
 #blockContent {
     background-color: #07393C;
     border-color: #07393C;
     border-style: solid;
 }
+
+#adminCRUD {
+    display: none;
+}
+
+#searchInput {
+    width: 75%;
+}
+
+/* End of ID-Based Styling */

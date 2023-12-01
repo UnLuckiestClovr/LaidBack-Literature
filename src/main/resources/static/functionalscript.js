@@ -1,7 +1,10 @@
 // Login Scripts --------------------------------------------------------------------------------------------------------
 
-function login(username, password) {
-    var httpPath = "/auth/login/" + username + "/" + password
+function login() {
+    let username = document.getElementById("logUnameInput").value.toString();
+    let password = document.getElementById("logPassInput").value.toString();
+
+    var httpPath = "/lb-literature/auth/" + username + "/" + password + "/login"
     var xmlHttp = new XMLHttpRequest();
 
     xmlHttp.onreadystatechange = function () {
@@ -9,13 +12,15 @@ function login(username, password) {
             sessionStorage.setItem("loggedIn", (JSON.parse(this.responseText).logBool));
             sessionStorage.setItem("authHeaderValue", ("Basic " + btoa(username + ":" + password)))
 
+            console.log(JSON.parse(this.responseText).logBool, JSON.parse(this.responseText).adBool)
+
             showAuthPriv(JSON.parse(this.responseText).adBool);
         } else {
 
         }
     }
 
-    xmlHttp.open("GET", httpPath, true)
+    xmlHttp.open("GET", httpPath, true);
     xmlHttp.send();
 }
 
@@ -71,11 +76,11 @@ try {
 
         for (var entry of books) {
             var entryHtml = '<li>' +
-                '<p>Book Title >> ' + entry.name + '</p>' +
-                '<p>Book Genre >> ' + entry.category + '</p>' +
-                '<p>Book Author >> ' + entry.author + '</p>' +
+                '<h3>' + entry.name + '</h3>' +
+                '<p>Genre >> ' + entry.category + '</p>' +
+                '<p>Author >> ' + entry.author + '</p>' +
                 '<p>Book Description >> ' + entry.description + '</p>' +
-                '<p>Book Price >> $' + entry.price + '</p>' +
+                '<p>Price >> $' + entry.price + '</p>' +
                 '</li>';
             entry_list.innerHTML += entryHtml;
         }
@@ -117,6 +122,10 @@ try {
 
 } catch (error) {}
 
-// ---------------------------------------------------------------------------------------------------------------------
+// Admin Page Scripts --------------------------------------------------------------------------------------------------
+
+try {
 
 
+
+} catch (error) {}

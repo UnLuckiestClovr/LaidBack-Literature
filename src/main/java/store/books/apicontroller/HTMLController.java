@@ -11,7 +11,7 @@ public class HTMLController {
     @GetMapping("/home")
     public String getHomePage() {
         return "<article>\n" +
-                "        <h1>Welcome to Laid-Back Literature Book Portal</h1>\n" +
+                "        <h2>Welcome to Laid-Back Literature Book Portal</h2>\n" +
                 "\n" +
                 "        <p>\n" +
                 "            Welcome to Laid-Back Literature, your online sanctuary for the soul-stirring world of books!\n" +
@@ -51,7 +51,16 @@ public class HTMLController {
 
     @GetMapping("/loginorregister")
     public String getLoginPage() {
-        return "";
+        return "<article>\n" +
+                "    <h2>Login</h2>\n" +
+                "    \n" +
+                "    <p><input type=\"text\" id=\"logUnameInput\"> << Username</p>\n" +
+                "    <p><input type=\"text\" id=\"logPassInput\"> << Password</p>\n" +
+                "\n" +
+                "    <br/><br/>\n" +
+                "    \n" +
+                "    <button onclick=\"login()\">Login</button>\n" +
+                "</article>";
     }
 
     @GetMapping("/admin")

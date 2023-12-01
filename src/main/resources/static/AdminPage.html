@@ -3,8 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Laid Back Literature - Emp Functions</title>
+
+    <script>
+
+        function showSubPage(subpageID) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.subpage');
+            pages.forEach(page => {
+                page.style.display = 'none';
+            });
+
+            // Show the selected page
+            const selectedPage = document.getElementById(subpageID);
+            if (selectedPage) {
+                selectedPage.style.display = 'block';
+            }
+        }
+
+    </script>
+
 </head>
 <body>
+
+<table>
+    <tr>
+        <td><a href="#" onclick="showSubPage('create')">Create Database Entries</a></td>
+        <td><a href="#" onclick="showSubPage('read')">Browse Database Entries</a></td>
+        <td><a href="#" onclick="showSubPage('update')">Update Database Entries</a></td>
+        <td><a href="#" onclick="showSubPage('delete')">Delete Database Entries</a></td>
+    </tr>
+</table>
+
+<article class="subpage" id="create">
+    <h2>Create Database Entries</h2>
+</article>
+
+<article class="subpage" id="read">
+    <h2>Browse Database Entries</h2>
+</article>
+
+<article class="subpage" id="update">
+    <h2>Update Database Entries</h2>
+</article>
+
+<article class="subpage" id="delete">
+    <h2>Delete Database Entries</h2>
+</article>
 
 </body>
 </html>
