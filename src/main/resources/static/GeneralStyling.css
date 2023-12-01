@@ -93,6 +93,6 @@ select option:checked {
 
 /* Class Styling */
 
-.subpage {
+.subpage, .crudPage {
     display: none;
 }
