@@ -79,18 +79,18 @@ public class GeneralAPIController {
             case "bookstore" -> BookstoreServicePortal.updateStoreEntry(obj);
             case "user" -> UserServicePortal.updateUserEntry(obj);
 
-            default -> throw new IllegalArgumentException("Invalid Collection"); // Throws In Case of Invalid Input
+            default -> throw new IllegalArgumentException("Invalid Collection Name"); // Throws In Case of Invalid Input
 
         }
     }
 
-    @RequestMapping(path= "/delete/{collection}",method = RequestMethod.DELETE)
-    public void deleteBook(@RequestBody String json, @PathVariable String collection){
+    @RequestMapping(path= "/delete/{collection}/{varSearch}",method = RequestMethod.DELETE)
+    public void deleteEntry(@PathVariable String varSearch, @PathVariable String collection){
         switch (collection) { //Checks Whether we want to Delete a Book, Bookstore, or User.
 
-            case "book" -> BookServicePortal.deleteBookEntry(json);
-            case "bookstore" -> BookstoreServicePortal.deleteStoreEntry(json);
-            case "user" -> UserServicePortal.deleteUserEntry(json);
+            case "book" -> BookServicePortal.deleteBookEntry(varSearch);
+            case "bookstore" -> BookstoreServicePortal.deleteStoreEntry(varSearch);
+            case "user" -> UserServicePortal.deleteUserEntry(varSearch);
 
             default -> throw new IllegalArgumentException("Invalid Collection"); // Throws In Case of Invalid Input
 

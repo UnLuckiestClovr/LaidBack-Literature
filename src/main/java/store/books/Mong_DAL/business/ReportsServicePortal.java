@@ -49,7 +49,7 @@ public class ReportsServicePortal {
         }
     }
 
-    public static void createReport(String jsonString, String type) {
+    public static void createReport(String string, String type) {
         try {
             MongoCollection<Document> coll = db.getCollection(type);
 
@@ -61,18 +61,19 @@ public class ReportsServicePortal {
 
             switch (type) {
                 case "consumable":
-                    ConsumableReport cons = objectMapper.readValue(jsonString, ConsumableReport.class);
                     doc = coll.find(Filters.and(
                             Filters.eq("year", year),
                             Filters.eq("month", month),
-                            Filters.eq("bookTitle", cons.getBookTitle()))).first();
+                            Filters.eq("bookTitle", string))).first();
+
                     if (doc != null) {
-                        ConsumableReport consumableReport = objectMapper.readValue(jsonString, ConsumableReport.class);
                         coll.updateOne(Filters.and(
                                 Filters.eq("year", year),
                                 Filters.eq("month", month),
-                                Filters.eq("bookTitle", consumableReport.getBookTitle())), new Document("numSold", (consumableReport.getBookTitle() + 1)));
+                                Filters.eq("bookTitle", string)), new Document("numSold", (doc.getInteger("numSold") + 1)));
                     } else {
+                        ConsumableReport cons = new ConsumableReport();
+                        cons.setBookTitle(string);
                         cons.setNumSold(0);
                         cons.setMonth(month.toString());
                         cons.setYear(year);
@@ -81,18 +82,20 @@ public class ReportsServicePortal {
                     break;
 
                 case "customer_visits":
-                    CustVisitsReport custV = objectMapper.readValue(jsonString, CustVisitsReport.class);
+
                     doc = coll.find(Filters.and(
                             Filters.eq("year", year),
                             Filters.eq("month", month),
-                            Filters.eq("customerID", custV.getCustomerID()))).first();
+                            Filters.eq("customerID", Integer.parseInt(string)))).first();
+
                     if (doc != null) {
-                        CustVisitsReport custVisitsReport = objectMapper.readValue(doc.toJson(), CustVisitsReport.class);
                         coll.updateOne(Filters.and(
                                 Filters.eq("year", year),
                                 Filters.eq("month", month),
-                                Filters.eq("customerID", custVisitsReport.getCustomerID())), new Document("numVisits", (custVisitsReport.getNumVisits() + 1)));
+                                Filters.eq("customerID", Integer.parseInt(string))), new Document("numVisits", (doc.getInteger("numVisits") + 1)));
                     } else {
+                        CustVisitsReport custV = new CustVisitsReport();
+                        custV.setCustomerID(Integer.parseInt(string));
                         custV.setNumVisits(0);
                         custV.setMonth(month.toString());
                         custV.setYear(year);
@@ -101,18 +104,20 @@ public class ReportsServicePortal {
                     break;
 
                 case "sales":
-                    SalesReport sale = objectMapper.readValue(jsonString, SalesReport.class);
+
                     doc = coll.find(Filters.and(
                             Filters.eq("year", year),
                             Filters.eq("month", month),
-                            Filters.eq("bookstoreID", sale.getBookstoreID()))).first();
+                            Filters.eq("bookstoreID", Integer.parseInt(string)))).first();
+
                     if (doc != null) {
-                        SalesReport salesReport = objectMapper.readValue(doc.toJson(), SalesReport.class);
                         coll.updateOne(Filters.and(
                                 Filters.eq("year", year),
                                 Filters.eq("month", month),
-                                Filters.eq("bookstoreID", salesReport.getBookstoreID())), new Document("bookSales", (salesReport.getBookSales() + 1)));
+                                Filters.eq("bookstoreID", Integer.parseInt(string))), new Document("bookSales", (doc.getInteger("bookSales") + 1)));
                     } else {
+                        SalesReport sale = new SalesReport();
+                        sale.setBookstoreID(Integer.parseInt(string));
                         sale.setBookSales(0);
                         sale.setMonth(month.toString());
                         sale.setYear(year);

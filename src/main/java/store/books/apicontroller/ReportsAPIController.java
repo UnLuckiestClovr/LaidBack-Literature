@@ -11,24 +11,18 @@ import java.util.ArrayList;
 @RequestMapping("/lb-reports")
 public class ReportsAPIController {
 
-    @GetMapping("/get-all-reports")
-    public <E> ArrayList<ArrayList<E>> getAllArrays() {
+    @GetMapping("/get-all-reports/{type}")
+    public <E> ArrayList<E> getAllArrays(@PathVariable String type) {
         try {
-            ArrayList<ArrayList<E>> jsonStrings = new ArrayList<>();
-
-            jsonStrings.add(ReportsServicePortal.initReportsArrayFromDTB("consumable"));
-            jsonStrings.add(ReportsServicePortal.initReportsArrayFromDTB("customer_visits"));
-            jsonStrings.add(ReportsServicePortal.initReportsArrayFromDTB("sales"));
-
-            return jsonStrings;
+            return ReportsServicePortal.initReportsArrayFromDTB(type);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
     }
-    @RequestMapping(path="/add/{type}", method= RequestMethod.POST)
-    public void addReport(@RequestBody String obj, @PathVariable String type) {
-        ReportsServicePortal.createReport(obj, type);
+    @RequestMapping(path="/add/{type}/{str}", method= RequestMethod.POST)
+    public void addReport(@PathVariable String str, @PathVariable String type) {
+        ReportsServicePortal.createReport(str, type);
     }
 
     @RequestMapping(path="/search/{type}/{year}/{month}", method = RequestMethod.GET)
