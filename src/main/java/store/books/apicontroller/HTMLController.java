@@ -96,7 +96,7 @@ public class HTMLController {
                 "        <br>\n" +
                 "\n" +
                 "        <label>Description</label>\n" +
-                "        <input type=\"text\" id=\"bookDescriptionC\" placeholder=\"Category\"/>\n" +
+                "        <input type=\"text\" id=\"bookDescriptionC\" placeholder=\"Description\"/>\n" +
                 "        <br>\n" +
                 "\n" +
                 "        <label>Category</label>\n" +
@@ -104,7 +104,7 @@ public class HTMLController {
                 "        <br>\n" +
                 "\n" +
                 "        <label>Price in USD Dollars ($)</label>\n" +
-                "        <input type=\"text\" id=\"bookPriceC\" placeholder=\"Category\"/>\n" +
+                "        <input type=\"text\" id=\"bookPriceC\" placeholder=\"Price (00.00)\"/>\n" +
                 "        <br>\n" +
                 "\n" +
                 "        <button onclick=\"submitCreateBook()\">Submit</button>\n" +
@@ -208,7 +208,7 @@ public class HTMLController {
                 "        <select id=\"searchCatsStores\">\n" +
                 "            <option value=\"state\">State</option>\n" +
                 "            <option value=\"city\">City</option>\n" +
-                "            <option value=\"zip\">Zip</option>\n" +
+                "            <option value=\"zipcode\">Zip</option>\n" +
                 "            <option value=\"address\">Address</option>\n" +
                 "        </select>\n" +
                 "\n" +
@@ -233,8 +233,7 @@ public class HTMLController {
                 "\n" +
                 "        <p><input type=\"text\" id=\"repMonthSearch\"> << Month</p>\n" +
                 "        <p><input type=\"text\" id=\"repYearSearch\"> << Year</p>\n" +
-                "\n" +
-                "        <input type=\"text\" id=\"reportSearchInput\"/>\n" +
+                "        \n" +
                 "        <br/>\n" +
                 "        <button onclick=\"getSearchedReports()\">Search for Report</button>\n" +
                 "        <br/>\n" +
@@ -321,6 +320,7 @@ public class HTMLController {
                 "    <h2>Delete Database Entries</h2>\n" +
                 "\n" +
                 "    <select id=\"DeleteSelect\" onchange=\"showDeletePage()\">\n" +
+                "        <option>Select...</option>\n" +
                 "        <option value=\"booksD\">Books</option>\n" +
                 "        <option value=\"bookstoresD\">Bookstores</option>\n" +
                 "        <option value=\"reportsD\">Monthly Reports</option>\n" +
@@ -341,7 +341,7 @@ public class HTMLController {
                 "        <input type=\"text\" id=\"storeDeleteInput\" placeholder=\"Bookstore Zipcode\"/>\n" +
                 "\n" +
                 "        <br/>\n" +
-                "        <button onclick=\"deleteBooktore()\">Delete Store</button>\n" +
+                "        <button onclick=\"deleteBookstore()\">Delete Store</button>\n" +
                 "\n" +
                 "    </section>\n" +
                 "\n" +
@@ -362,17 +362,6 @@ public class HTMLController {
                 "        <input type=\"text\" id=\"repMonthInputD\" placeholder=\"Report Month - (January, February, etc...)\"/>\n" +
                 "\n" +
                 "        <br/>\n" +
-                "        <button onclick=\"deleteBookstore()\">Delete Report</button>\n" +
-                "\n" +
-                "        <!-- year month -->\n" +
-                "\n" +
-                "        <select id=\"searchCatsReportsD\">\n" +
-                "            <option value=\"year\">Year</option>\n" +
-                "            <option value=\"month\">Month</option>\n" +
-                "        </select>\n" +
-                "\n" +
-                "        <input type=\"text\" id=\"reportSearchInputD\"/>\n" +
-                "        <br/>\n" +
                 "        <button onclick=\"deleteReport()\">Delete Report</button>\n" +
                 "\n" +
                 "    </section>\n" +
@@ -386,6 +375,8 @@ public class HTMLController {
                 "        <button onclick=\"deleteUser()\">Delete Store</button>\n" +
                 "\n" +
                 "    </section>\n" +
+                "\n" +
+                "    <p id=\"outputText\"></p>\n" +
                 "</article>\n";
     }
 

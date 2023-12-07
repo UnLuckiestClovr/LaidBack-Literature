@@ -103,7 +103,7 @@ try {
     }
 
     function getSearchBooks() {
-        const searchInput = document.getElementById("BookSearchInput").value.toString();
+        const searchInput = document.getElementById("bookSearchInput").value.toString();
         const catInput = document.getElementById("searchCatsBooks").value.toString();
         var xmlHttp = new XMLHttpRequest();
 
@@ -302,8 +302,8 @@ try {
     }
 
     function getSearchedBookstores() {
-        const searchInput = document.getElementById("BookstoreSearchInput").value.toString();
-        const catInput = document.getElementById("searchCatsBookstores").value.toString();
+        const searchInput = document.getElementById("storesSearchInput").value.toString();
+        const catInput = document.getElementById("searchCatsStores").value.toString();
         var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.onreadystatechange = function () {
@@ -334,7 +334,7 @@ try {
     }
 
     function getSearchedUsers() {
-        const searchInput = document.getElementById("UserSearchInput").value.toString();
+        const searchInput = document.getElementById("usersSearchInput").value.toString();
         const catInput = document.getElementById("searchCatsUsers").value.toString();
         var xmlHttp = new XMLHttpRequest();
 
@@ -495,8 +495,7 @@ try {
 
         xmlHttp.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                var reps = JSON.parse(this.responseText)
-                renderConsReports(reps)
+                document.getElementById("outputText").innerHTML = this.responseText.toString();
             }
         }
 
@@ -522,8 +521,7 @@ try {
 
         xmlHttp.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                var reps = JSON.parse(this.responseText)
-                renderConsReports(reps)
+                document.getElementById("outputText").innerHTML = this.responseText.toString();
             }
         }
 
@@ -553,8 +551,7 @@ try {
 
         xmlHttp.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                var reps = JSON.parse(this.responseText)
-                renderConsReports(reps)
+                document.getElementById("outputText").innerHTML = this.responseText.toString();
             }
         }
 
@@ -565,32 +562,33 @@ try {
 
     function submitUpdateBook() {
 
-        var jsonString = "{" +
-            "\"docName\" : \"" + document.getElementById("bookToUpdateTitle").value.toString() +"\"" +
-            "\"keyValue\" : \"" + document.getElementById("updateBookVariableSelect").value.toString() + "\"" +
-            "\"newValue\" : \"" + document.getElementById("newBookUpdateValue").value.toString() + "\"" +
-            "}"
+        var json = {
+            "docName" : document.getElementById("bookToUpdateTitle").value.toString(),
+            "keyValue" : document.getElementById("updateBookVariableSelect").value.toString(),
+            "newValue" : document.getElementById("newBookUpdateValue").value.toString()
+        }
 
         var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                console.log("Update Successful")
+                document.getElementById("outputText").innerHTML = "Update Successful!";
             }
         }
 
         xmlHttp.open("PATCH", ("/lb-literature/update/book"), true);
+        xmlHttp.setRequestHeader('Content-Type', 'application/json'); // Set Content-Type
         xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
-        xmlHttp.send(jsonString);
+        xmlHttp.send(JSON.stringify(json));
     }
 
     function submitUpdateStore() {
 
-        var jsonString = "{" +
-            "\"docName\" : \"" + document.getElementById("storeToUpdateID").value.toString() +"\"" +
-            "\"keyValue\" : \"" + document.getElementById("updateStoreSelect").value.toString() + "\"" +
-            "\"newValue\" : \"" + document.getElementById("newStoreUpdateValue").value.toString() + "\"" +
-            "}"
+        var jsonString = {
+            "docName" : document.getElementById("storeToUpdateID").value.toString(),
+            "keyValue" : document.getElementById("updateStoreSelect").value.toString(),
+            "newValue" : document.getElementById("newStoreUpdateValue").value.toString()
+            }
 
         var xmlHttp = new XMLHttpRequest();
 
@@ -602,37 +600,37 @@ try {
 
         xmlHttp.open("PATCH", ("/lb-literature/update/bookstore"), true);
         xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
-        xmlHttp.send(jsonString);
+        xmlHttp.send(JSON.stringify(jsonString));
     }
 
     function deleteBook() {
-        var search = document.getElementById("storeDeleteInput").value.toString();
-
-        var xmlHttp = new XMLHttpRequest();
-
-        xmlHttp.onreadystatechange = function () {
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                console.log("Deletion Successful")
-            }
-        }
-
-        xmlHttp.open("DELETE", ("/lb-literature/delete/bookstore/" + search), true);
-        xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
-        xmlHttp.send();
-    }
-
-    function deleteBookstore() {
         var search = document.getElementById("bookDeleteInput").value.toString();
 
         var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                console.log("Deletion Successful")
+                document.getElementById("outputText").innerHTML = "Deletion Successful!";
             }
         }
 
         xmlHttp.open("DELETE", ("/lb-literature/delete/book/" + search), true);
+        xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
+        xmlHttp.send();
+    }
+
+    function deleteBookstore() {
+        var search = document.getElementById("storeDeleteInput").value.toString();
+
+        var xmlHttp = new XMLHttpRequest();
+
+        xmlHttp.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                document.getElementById("outputText").innerHTML = "Deletion Successful!";
+            }
+        }
+
+        xmlHttp.open("DELETE", ("/lb-literature/delete/bookstore/" + search), true);
         xmlHttp.setRequestHeader("Authorization", sessionStorage.getItem("authHeaderValue"));
         xmlHttp.send();
     }
@@ -646,7 +644,7 @@ try {
 
         xmlHttp.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                console.log("Deletion Successful")
+                document.getElementById("outputText").innerHTML = "Deletion Successful!";
             }
         }
 
@@ -662,7 +660,7 @@ try {
 
         xmlHttp.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                console.log("Deletion Successful")
+                document.getElementById("outputText").innerHTML = "Deletion Successful!";
             }
         }
 

@@ -44,6 +44,7 @@ public class GeneralAPIController {
             case "state" -> (ArrayList<T>) BookstoreServicePortal.findStoreByState(search);
             case "city" -> (ArrayList<T>) BookstoreServicePortal.findStoreByCity(search);
             case "zipcode" -> (ArrayList<T>) BookstoreServicePortal.findStoreByZipcode(search);
+            case "address" -> (ArrayList<T>) BookstoreServicePortal.findStorebyAddress(search);
 
             default -> new ArrayList<>(); // Throws In Case of Invalid Input
         };
@@ -59,20 +60,34 @@ public class GeneralAPIController {
     }
 
     @RequestMapping(path="/add/{collection}", method= RequestMethod.POST)
-    public void addEntry(@RequestBody String obj, @PathVariable String collection) {
-        switch (collection) { // Checks whether we want to add a Book, Bookstore, or User object to our Database
+    public String addEntry(@RequestBody String obj, @PathVariable String collection) {
+        System.out.println("String : " + obj + "\nCollection : " + collection);
 
-            case "book" -> BookServicePortal.createBookEntry(obj);
-            case "bookstore" -> BookstoreServicePortal.createBookstoreEntry(obj);
-            case "user" -> UserServicePortal.createUserEntry(obj);
+        try {
+            switch (collection) { // Checks whether we want to add a Book, Bookstore, or User object to our Database
 
-            default -> throw new IllegalArgumentException("Invalid Collection"); // Throws In Case of Invalid Input
-
+                case "book":
+                    BookServicePortal.createBookEntry(obj);
+                    return "Addition of Book Successful";
+                case "bookstore":
+                    BookstoreServicePortal.createBookstoreEntry(obj);
+                    return "Addition of Bookstore Successful";
+                case "user":
+                    UserServicePortal.createUserEntry(obj);
+                    return "Addition of User Successful";
+                default:
+                    throw new IllegalArgumentException("Invalid Collection"); // Throws In Case of Invalid Input
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error: Addition of Entry Failed";
         }
+
     }
 
     @RequestMapping(path="/update/{collection}", method=RequestMethod.PATCH)
     public void updateEntry(@RequestBody UpdateRequest obj, @PathVariable String collection) {
+        System.out.println("Update : " + obj + "\nCollection : " + collection);
         switch (collection) { // Checks if we want to update a Book, Bookstore, or User Entry.
 
             case "book" -> BookServicePortal.updateBookEntry(obj);
@@ -86,6 +101,7 @@ public class GeneralAPIController {
 
     @RequestMapping(path= "/delete/{collection}/{varSearch}",method = RequestMethod.DELETE)
     public void deleteEntry(@PathVariable String varSearch, @PathVariable String collection){
+        System.out.println("String : " + varSearch + "\nCollection : " + collection);
         switch (collection) { //Checks Whether we want to Delete a Book, Bookstore, or User.
 
             case "book" -> BookServicePortal.deleteBookEntry(varSearch);

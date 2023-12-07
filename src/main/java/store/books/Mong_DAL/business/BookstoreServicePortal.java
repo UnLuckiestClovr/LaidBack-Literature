@@ -113,7 +113,25 @@ public class BookstoreServicePortal {
             ArrayList<BookstoreItem> output = new ArrayList<>();
 
             for (BookstoreItem bookstore : bookstores) {
-                if (zipSearch.equalsIgnoreCase(bookstore.getZipcode())) {
+                if (zipSearch.equals(bookstore.getZipcode())) {
+                    output.add(bookstore);
+                }
+            }
+
+            return output;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public static  ArrayList<BookstoreItem> findStorebyAddress(String addressSearch) {
+
+        try {
+            ArrayList<BookstoreItem> output = new ArrayList<>();
+
+            for (BookstoreItem bookstore : bookstores) {
+                if (addressSearch.equalsIgnoreCase(bookstore.getAddress())) {
                     output.add(bookstore);
                 }
             }

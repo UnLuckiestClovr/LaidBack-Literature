@@ -29,7 +29,7 @@
         <br>
 
         <label>Description</label>
-        <input type="text" id="bookDescriptionC" placeholder="Category"/>
+        <input type="text" id="bookDescriptionC" placeholder="Description"/>
         <br>
 
         <label>Category</label>
@@ -37,7 +37,7 @@
         <br>
 
         <label>Price in USD Dollars ($)</label>
-        <input type="text" id="bookPriceC" placeholder="Category"/>
+        <input type="text" id="bookPriceC" placeholder="Price (00.00)"/>
         <br>
 
         <button onclick="submitCreateBook()">Submit</button>
@@ -141,7 +141,7 @@
         <select id="searchCatsStores">
             <option value="state">State</option>
             <option value="city">City</option>
-            <option value="zip">Zip</option>
+            <option value="zipcode">Zip</option>
             <option value="address">Address</option>
         </select>
 
@@ -167,7 +167,6 @@
         <p><input type="text" id="repMonthSearch"> << Month</p>
         <p><input type="text" id="repYearSearch"> << Year</p>
 
-        <input type="text" id="reportSearchInput"/>
         <br/>
         <button onclick="getSearchedReports()">Search for Report</button>
         <br/>
@@ -254,6 +253,7 @@
     <h2>Delete Database Entries</h2>
 
     <select id="DeleteSelect" onchange="showDeletePage()">
+        <option>Select...</option>
         <option value="booksD">Books</option>
         <option value="bookstoresD">Bookstores</option>
         <option value="reportsD">Monthly Reports</option>
@@ -274,7 +274,7 @@
         <input type="text" id="storeDeleteInput" placeholder="Bookstore Zipcode"/>
 
         <br/>
-        <button onclick="deleteBooktore()">Delete Store</button>
+        <button onclick="deleteBookstore()">Delete Store</button>
 
     </section>
 
@@ -295,17 +295,6 @@
         <input type="text" id="repMonthInputD" placeholder="Report Month - (January, February, etc...)"/>
 
         <br/>
-        <button onclick="deleteBookstore()">Delete Report</button>
-
-        <!-- year month -->
-
-        <select id="searchCatsReportsD">
-            <option value="year">Year</option>
-            <option value="month">Month</option>
-        </select>
-
-        <input type="text" id="reportSearchInputD"/>
-        <br/>
         <button onclick="deleteReport()">Delete Report</button>
 
     </section>
@@ -319,4 +308,6 @@
         <button onclick="deleteUser()">Delete Store</button>
 
     </section>
+
+    <p id="outputText"></p>
 </article>
