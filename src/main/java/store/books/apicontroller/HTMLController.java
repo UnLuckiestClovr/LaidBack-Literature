@@ -377,7 +377,7 @@ public class HTMLController {
                 "    </section>\n" +
                 "\n" +
                 "    <p id=\"outputText\"></p>\n" +
-                "</article>\n";
+                "</article> \n";
     }
 
 }
