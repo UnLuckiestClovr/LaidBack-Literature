@@ -25,7 +25,7 @@ function login() {
                 document.getElementById("loginOutput").innerHTML = "Login Unsuccessful : Invalid Credentials"
             }
 
-        } else {
+        } else if(this.readyState === XMLHttpRequest.DONE && this.status !== 200) {
             document.getElementById("loginOutput").innerHTML = "Login Unsuccessful : Server Error"
         }
     }
