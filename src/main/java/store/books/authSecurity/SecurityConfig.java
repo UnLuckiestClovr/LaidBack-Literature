@@ -28,6 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/").permitAll()
+                        .requestMatchers("/#").permitAll()
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/GeneralStyling.css").permitAll()
                         .requestMatchers("/functionalscript.js").permitAll()
@@ -44,6 +45,7 @@ public class SecurityConfig {
                         .requestMatchers("/get-html-state/browsebooks").permitAll()
                         .requestMatchers("/get-html-state/loginorregister").permitAll()
                         .requestMatchers("/lb-literature/auth/login/**").permitAll()
+                        .requestMatchers("http://localhost:29971").permitAll()
                         .anyRequest().authenticated()) // locks all non/matching paths down
                 .httpBasic(withDefaults()); // Auth Type
 

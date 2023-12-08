@@ -1,3 +1,72 @@
+/* ID-Based Styling */
+
+#blockContent {
+    background-color: #07393C;
+    border-color: #07393C;
+    border-style: solid;
+}
+
+#adminCRUD, #logoutBTN {
+    display: none;
+}
+
+#searchInput {
+    width: 75%;
+}
+
+/* End of ID-Based Styling */
+
+
+/* Class Styling */
+
+.subpage, .crudPage {
+    display: none;
+}
+
+/* End of Class Styling*/
+
+/* General Styling past this Point */
+
+/* Style for the input field */
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #333;
+    background-color: #f7f7f7;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Style when the input is focused */
+input[type="text"]:focus {
+    outline: none;
+    border-color: #8c6d62;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+select {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+    background-color: #fff;
+    color: #333;
+}
+
+select option {
+    background-color: #fff;
+    color: #333;
+}
+
+select option:checked {
+    background-color: #f0f0f0;
+    color: #555;
+}
+
 body {
     padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -29,8 +98,6 @@ h1, h2, h3 {
     place-self: center;
 }
 
-
-/* List Styling */
 ul {
     list-style: none;
     padding: 0;
@@ -46,53 +113,29 @@ ul li {
     background-color: #042123;
 }
 
-/* End of List Styling */
-
-/* Select Block Styling */
-
-select {
-    padding: 5px;
-    font-size: 14px;
-    border: 1px solid #ccc;
+button {
+    padding: 10px 20px;
+    border: none;
     border-radius: 5px;
-    width: 200px;
-    background-color: #fff;
-    color: #333;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #fff;
+    background-color: #8c6d62;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-select option {
-    background-color: #fff;
-    color: #333;
+/* Hover effect */
+button:hover {
+    background-color: #a3877a;
 }
 
-select option:checked {
-    background-color: #f0f0f0;
-    color: #555;
+.image-container {
+    text-align: center;
 }
 
-/* End of Select Styling */
-
-/* ID-Based Styling */
-
-#blockContent {
-    background-color: #07393C;
-    border-color: #07393C;
-    border-style: solid;
-}
-
-#adminCRUD {
-    display: none;
-}
-
-#searchInput {
-    width: 75%;
-}
-
-/* End of ID-Based Styling */
-
-
-/* Class Styling */
-
-.subpage, .crudPage {
-    display: none;
+.image-container img {
+    display: block;
+    margin: 0 auto;
 }

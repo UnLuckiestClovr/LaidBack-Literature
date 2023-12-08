@@ -9,14 +9,24 @@ function login() {
 
     xmlHttp.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            sessionStorage.setItem("loggedIn", (JSON.parse(this.responseText).logBool));
-            sessionStorage.setItem("authHeaderValue", ("Basic " + btoa(username + ":" + password)))
+            var loginSuccess = JSON.parse(this.responseText).logBool;
 
-            console.log(JSON.parse(this.responseText).logBool, JSON.parse(this.responseText).adBool)
+            console.log(loginSuccess, JSON.parse(this.responseText).adBool)
+            if(loginSuccess) {
+                sessionStorage.setItem("loggedIn", (JSON.parse(this.responseText).logBool));
+                sessionStorage.setItem("authHeaderValue", ("Basic " + btoa(username + ":" + password)))
 
-            showAuthPriv(JSON.parse(this.responseText).adBool);
+                toggleLoginLogoutBTNs(JSON.parse(this.responseText).logBool);
+                getHTMLPage("home")
+                showAuthPriv(JSON.parse(this.responseText).adBool);
+                document.getElementById("loginOutput").innerHTML = ""
+
+            } else {
+                document.getElementById("loginOutput").innerHTML = "Login Unsuccessful : Invalid Credentials"
+            }
+
         } else {
-
+            document.getElementById("loginOutput").innerHTML = "Login Unsuccessful : Server Error"
         }
     }
 
@@ -24,8 +34,19 @@ function login() {
     xmlHttp.send();
 }
 
-function anonLoginandLogout() {
+function Logout() {
     sessionStorage.setItem("authHeaderValue", "")
+    toggleLoginLogoutBTNs(false);
+}
+
+function toggleLoginLogoutBTNs(loggingIn) {
+    if (loggingIn) {
+        document.getElementById("loginBTN").style.display = "none";
+        document.getElementById("logoutBTN").style.display = "block";
+    } else {
+        document.getElementById("loginBTN").style.display = "block";
+        document.getElementById("logoutBTN").style.display = "none";
+    }
 }
 
 function showAuthPriv(bool) {
