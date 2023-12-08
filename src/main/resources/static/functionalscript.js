@@ -37,6 +37,8 @@ function login() {
 function Logout() {
     sessionStorage.setItem("authHeaderValue", "")
     toggleLoginLogoutBTNs(false);
+    getHTMLPage("home")
+    showAuthPriv(false);
 }
 
 function toggleLoginLogoutBTNs(loggingIn) {
